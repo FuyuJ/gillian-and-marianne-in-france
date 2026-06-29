@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root{
     --teal:#1C9DB1;
@@ -35,45 +37,42 @@
   }
   .tab{
     appearance:none;border:none;background:none;cursor:pointer;
-    font-family:"Inter",sans-serif;font-size:13.5px;font-weight:600;
+    font-family:"Fraunces",Georgia,serif;font-size:17px;font-weight:500;
     letter-spacing:.01em;color:var(--muted);
-    padding:9px 16px;border-radius:999px;white-space:nowrap;
+    padding:8px 4px;margin:0 12px;border-bottom:2px solid transparent;white-space:nowrap;
     transition:.2s;
   }
-  .tab .ico{display:inline-block;margin-right:6px;opacity:.8}
-  .tab.active{color:#fff;background:var(--teal)}
+  .tab.active{color:var(--teal-deep);border-bottom-color:var(--teal)}
 
   /* ---------------- view switching ---------------- */
   .view{display:none}
   .view.active{display:block}
 
+  /* ---------------- scene pattern: pinned bg, panels glide over ---------------- */
+  .scene{position:relative}
+  .scene > .bg{position:sticky;top:0;height:100vh;z-index:0;overflow:hidden}
+  .scene > .cap{position:absolute;left:0;right:0;z-index:1}
+  .scene > .panel{position:relative;z-index:2;background:#fff;min-height:100vh}
+
   /* ---------------- hero map ---------------- */
-  .hero{
-    position:relative;height:88vh;min-height:540px;overflow:hidden;
-    background:var(--sea);
-    display:flex;align-items:center;justify-content:center;
-  }
+  .hero .bg{background:var(--sea)}
   .hero .mapwrap{position:absolute;inset:0}
   .hero .mapwrap svg{width:100%;height:100%;display:block}
-  .hero .overlay{
-    position:relative;z-index:2;text-align:center;color:#fff;
-    padding:0 26px;max-width:760px;
-  }
+  .hero .cap{top:7vh;text-align:center;color:#fff;padding:0 24px}
   .hero .eyebrow{
-    font-size:12px;letter-spacing:.34em;text-transform:uppercase;
-    font-weight:600;margin-bottom:18px;opacity:.92;
+    font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+    font-weight:600;margin-bottom:12px;opacity:.92;
   }
   .hero h1{
-    font-family:"Fraunces",serif;font-weight:600;font-style:normal;
-    font-size:clamp(40px,9vw,76px);line-height:1.0;letter-spacing:-.01em;
-    margin:0;text-shadow:0 2px 24px rgba(0,40,46,.35);
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:clamp(23px,4.8vw,38px);line-height:1.1;letter-spacing:-.01em;
+    margin:0 auto;max-width:12em;text-shadow:0 2px 18px rgba(0,40,46,.4);
   }
   .hero .dates{
-    margin-top:20px;font-size:14px;letter-spacing:.04em;font-weight:500;
-    opacity:.95;
+    margin-top:13px;font-size:13px;letter-spacing:.04em;font-weight:500;opacity:.95;
   }
   .scrollcue{
-    position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+    position:absolute;left:50%;bottom:20px;transform:translateX(-50%);
     z-index:2;color:#fff;opacity:.85;font-size:22px;animation:bob 1.8s ease-in-out infinite;
   }
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
@@ -92,57 +91,66 @@
   }
 
   /* ---------------- gallery ---------------- */
-  .gallery-wrap{margin:30px 0 8px}
+  .gallery-wrap{position:relative;margin:34px 0 10px}
   .gallery{
     display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
     gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
   .gallery::-webkit-scrollbar{display:none}
-  .slide{
-    flex:0 0 100%;scroll-snap-align:center;padding:0 24px;
-  }
+  .slide{flex:0 0 100%;scroll-snap-align:center;padding:0}
   .slide img{
-    width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;
+    width:100%;aspect-ratio:4/5;object-fit:cover;
     display:block;background:#dfe9ea;
   }
-  .dots{display:flex;justify-content:center;gap:9px;margin-top:16px}
+  .gallery-wrap::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:96px;z-index:2;
+    pointer-events:none;background:linear-gradient(transparent,rgba(8,24,28,.42));
+  }
+  .dots{
+    position:absolute;left:0;right:0;bottom:16px;z-index:3;
+    display:flex;justify-content:center;gap:10px;
+  }
   .dot{
-    width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);
-    background:transparent;transition:.2s;cursor:pointer;
+    width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);
+    background:transparent;transition:.2s;cursor:pointer;padding:0;
+    box-shadow:0 0 4px rgba(0,0,0,.25);
   }
-  .dot.on{background:var(--teal)}
+  .dot.on{background:#fff}
 
-  /* ---------------- day: parallax hero ---------------- */
-  .day{position:relative}
-  .day-hero{position:relative;height:128vh}
-  .day-bg{
-    position:sticky;top:0;height:100vh;overflow:hidden;
+  /* ---------------- real route map ---------------- */
+  .routewrap{max-width:720px;margin:6px auto 2px;padding:0 24px}
+  .route-label{
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin:0 0 12px;
   }
-  .day-bg img{width:100%;height:100%;object-fit:cover;display:block;background:#cfe0e2}
+  .routemap{height:380px;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#dfe9ea}
+  .routemap .leaflet-control-attribution{font-size:9px}
+
+  /* ---------------- day scene ---------------- */
+  .day .bg img{width:100%;height:100%;object-fit:cover;display:block;background:#cfe0e2}
   .day-scrim{
     position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(10,30,34,.18) 0%,rgba(10,30,34,.05) 40%,rgba(10,30,34,.32) 100%);
+    background:linear-gradient(180deg,rgba(10,30,34,.20) 0%,rgba(10,30,34,.05) 42%,rgba(10,30,34,.34) 100%);
   }
-  .day-cap{
-    position:absolute;top:32vh;left:0;right:0;z-index:3;
-    text-align:center;color:#fff;padding:0 24px;
+  .day .cap{
+    top:30vh;text-align:center;color:#fff;padding:0 24px;
     text-shadow:0 2px 26px rgba(0,30,36,.5);
   }
-  .day-cap .dno{
+  .day .cap .dno{
     font-family:"Fraunces",serif;font-style:italic;font-weight:500;
     font-size:clamp(22px,5vw,30px);margin-bottom:4px;
   }
-  .day-cap h3{
+  .day .cap h3{
     font-family:"Fraunces",serif;font-weight:600;
-    font-size:clamp(38px,8.4vw,66px);line-height:1.02;margin:0;
+    font-size:clamp(36px,8vw,62px);line-height:1.02;margin:0;
   }
-  .day-cap .ddate{
+  .day .cap .ddate{
     font-family:"Fraunces",serif;font-weight:500;
     font-size:clamp(20px,4.4vw,28px);margin-top:8px;
   }
 
-  /* ---------------- day: body ---------------- */
-  .day-body{max-width:720px;margin:0 auto;padding:40px 24px 30px;position:relative;z-index:4;background:#fff}
+  /* ---------------- day body (white panel content) ---------------- */
+  .day-body{max-width:720px;margin:0 auto;padding:46px 24px 40px}
   .callout{
     background:var(--teal);color:#fff;border-radius:3px;
     padding:20px 22px;font-size:16px;line-height:1.6;margin:0 0 30px;
@@ -182,17 +190,16 @@
   .totop.show{opacity:1;pointer-events:auto}
 
   @media(min-width:780px){
-    .slide{flex-basis:560px;padding:0 8px}
-    .gallery{padding:0 calc(50% - 280px)}
-    .day-hero{height:130vh}
+    .gallery-wrap{max-width:560px;margin-left:auto;margin-right:auto}
+    .routemap{height:440px}
   }
 </style>
 </head>
 <body>
 
   <nav class="tabs" id="tabs">
-    <button class="tab active" data-view="coast"><span class="ico">⛵</span>Brittany &amp; Normandy</button>
-    <button class="tab" data-view="alps"><span class="ico">🏔</span>French Alps</button>
+    <button class="tab active" data-view="coast">Brittany &amp; Normandy</button>
+    <button class="tab" data-view="alps">French Alps</button>
   </nav>
 
   <main id="view-coast" class="view active"></main>
@@ -204,7 +211,15 @@
 /* =================================================================
    DATA
 ================================================================= */
-function img(file,w){return `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=${w}`;}
+/* --- PHOTOS ---
+   To use your own higher-res pictures: make an /images folder in the repo, drop
+   files in, and replace any value in FILES below with e.g. "images/saint-malo.jpg".
+   Any value that already looks like a local path or full URL is used as-is;
+   everything else is pulled from Wikimedia Commons at the requested width. */
+function img(file,w){
+  if(/^(images\/|\.?\/|https?:)/i.test(file)) return file;
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=${w}`;
+}
 
 const FILES = {
   saintMalo:"Ramparts_of_Saint-Malo.jpg",
@@ -239,9 +254,9 @@ const DATA = {
     ],
     days:[
       {dno:"Day 1 of 4",title:"Arrival &amp; Saint-Malo",date:"12 August 2025",bg:FILES.saintMalo,
-       intro:{ttl:"On Arrival",txt:"You'll be met at Paris CDG and transferred west to the walled corsair city of Saint-Malo on the Brittany coast — roughly a four-hour journey by car, or by TGV via Rennes."},
+       intro:{ttl:"On Arrival",txt:"From Paris CDG it's a straight run west to the walled corsair city of Saint-Malo on the Brittany coast — about a four-hour drive in your hire car, or the TGV via Rennes."},
        sched:[
-        ["10:00","Land at Paris CDG; meet your driver or connect to the TGV heading west."],
+        ["10:00","Land at Paris CDG, pick up the hire car and point it west (or catch the TGV)."],
         ["13:00","Lunch en route — a first taste of Breton galettes and cider."],
         ["15:30","Arrive Saint-Malo and settle inside the walls (intra-muros)."],
         ["17:00","Walk the ramparts as the tide rolls in, with views across to Dinard."],
@@ -310,7 +325,7 @@ const DATA = {
       {dno:"Day 1 of 4",title:"Arrival &amp; Annecy",date:"12 August 2025",bg:FILES.lakeAnnecy,
        intro:{ttl:"On Arrival",txt:"From CDG you'll head south to Annecy, the ‘Venice of the Alps’, where a turquoise lake meets a maze of flower-lined canals — roughly five to six hours by road, or faster by TGV."},
        sched:[
-        ["10:00","Land at Paris CDG; meet your driver or connect to the TGV south."],
+        ["10:00","Land at Paris CDG, pick up the hire car and head south (or catch the TGV)."],
         ["13:00","Lunch en route through the French countryside."],
         ["16:30","Arrive Annecy and settle in near the old town."],
         ["18:00","First stroll along the lakefront and over the Pont des Amours."],
@@ -398,53 +413,59 @@ function ev([t,d]){
 }
 function dayHTML(d){
   return `
-  <section class="day">
-    <div class="day-hero">
-      <div class="day-bg"><img loading="lazy" alt="${d.title}" src="${img(d.bg,1500)}"><div class="day-scrim"></div></div>
-      <div class="day-cap">
-        <div class="dno">${d.dno}</div>
-        <h3>${d.title}</h3>
-        <div class="ddate">${d.date}</div>
-      </div>
+  <section class="scene day">
+    <div class="bg"><img loading="lazy" alt="${d.title}" src="${img(d.bg,2000)}"><div class="day-scrim"></div></div>
+    <div class="cap">
+      <div class="dno">${d.dno}</div>
+      <h3>${d.title}</h3>
+      <div class="ddate">${d.date}</div>
     </div>
-    <div class="day-body">
-      <div class="callout ${d.intro.ttl?'':''}"><span class="ttl">${d.intro.ttl}</span>${d.intro.txt}</div>
-      ${d.sched.map(ev).join("")}
-      <div class="opt-h">Options for the day include:</div>
-      <ul class="opt">${d.options.map(o=>`<li>${o}</li>`).join("")}</ul>
-      <div class="callout ${d.note.cls}"><span class="ttl">${d.note.ttl}</span>${d.note.txt}</div>
+    <div class="panel">
+      <div class="day-body">
+        <div class="callout"><span class="ttl">${d.intro.ttl}</span>${d.intro.txt}</div>
+        ${d.sched.map(ev).join("")}
+        <div class="opt-h">Options for the day include:</div>
+        <ul class="opt">${d.options.map(o=>`<li>${o}</li>`).join("")}</ul>
+        <div class="callout ${d.note.cls}"><span class="ttl">${d.note.ttl}</span>${d.note.txt}</div>
+      </div>
     </div>
   </section>`;
 }
 function viewHTML(key){
   const v=DATA[key];
   return `
-  <section class="hero">
-    <div class="mapwrap" data-map="${key}"></div>
-    <div class="overlay">
+  <section class="scene hero">
+    <div class="bg">
+      <div class="mapwrap" data-map="${key}"></div>
+      <div class="scrollcue">⌄</div>
+    </div>
+    <div class="cap">
       <div class="eyebrow">Two Friends · France</div>
       <h1 class="serif">${v.heroTitle}</h1>
       <div class="dates">${v.dates}</div>
     </div>
-    <div class="scrollcue">⌄</div>
+    <div class="panel">
+      <div class="section">
+        <h2 class="serif">${v.overviewH}</h2>
+        ${v.overview.map(p=>`<p>${p}</p>`).join("")}
+      </div>
+      <div class="routewrap">
+        <div class="route-label">The Route</div>
+        <div class="routemap" id="rmap-${key}"></div>
+      </div>
+      <div style="max-width:720px;margin:0 auto;padding:0 24px">
+        <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1700)}">
+      </div>
+      <div class="gallery-wrap">
+        <div class="gallery" data-gallery="${key}">
+          ${v.gallery.map(f=>`<div class="slide"><img loading="lazy" alt="" src="${img(f,1500)}"></div>`).join("")}
+        </div>
+        <div class="dots" data-dots="${key}">
+          ${v.gallery.map((_,i)=>`<button class="dot ${i===0?'on':''}" data-i="${i}" aria-label="Photo ${i+1}"></button>`).join("")}
+        </div>
+      </div>
+    </div>
   </section>
-
-  <div class="section">
-    <h2 class="serif">${v.overviewH}</h2>
-    ${v.overview.map(p=>`<p>${p}</p>`).join("")}
-  </div>
-  <div style="max-width:720px;margin:0 auto;padding:0 24px">
-    <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1400)}">
-  </div>
-
-  <div class="gallery-wrap">
-    <div class="gallery" data-gallery="${key}">
-      ${v.gallery.map(f=>`<div class="slide"><img loading="lazy" alt="" src="${img(f,1000)}"></div>`).join("")}
-    </div>
-    <div class="dots" data-dots="${key}">
-      ${v.gallery.map((_,i)=>`<button class="dot ${i===0?'on':''}" data-i="${i}" aria-label="Photo ${i+1}"></button>`).join("")}
-    </div>
-  </div>
 
   ${v.days.map(dayHTML).join("")}
 
@@ -463,10 +484,29 @@ function viewHTML(key){
 document.getElementById("view-coast").innerHTML = viewHTML("coast");
 document.getElementById("view-alps").innerHTML  = viewHTML("alps");
 
-// maps
+// stylised hero maps
 document.querySelectorAll("[data-map]").forEach(el=>{
   el.innerHTML = heroMap(DATA[el.dataset.map].stops);
 });
+
+// real interactive route maps (Leaflet + OpenStreetMap)
+const ROUTEMAPS={};
+function initRouteMap(key){
+  const v=DATA[key];
+  const pts=v.stops.map(s=>[s[0],s[1]]);
+  const map=L.map("rmap-"+key,{scrollWheelZoom:false,zoomControl:true});
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {maxZoom:18,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+  L.polyline(pts,{color:"#16808F",weight:3,dashArray:"3 8",opacity:.95}).addTo(map);
+  v.stops.forEach(s=>{
+    L.circleMarker([s[0],s[1]],{radius:6,color:"#0d2127",weight:2,fillColor:"#16808F",fillOpacity:1})
+      .addTo(map).bindTooltip(s[2],{direction:"top",offset:[0,-6]});
+  });
+  const b=L.latLngBounds(pts).pad(0.25);
+  map.fitBounds(b);
+  ROUTEMAPS[key]={map,b};
+}
+if(window.L){ initRouteMap("coast"); initRouteMap("alps"); }
 
 // graceful image fallback
 function attachFallback(scope){
@@ -508,6 +548,8 @@ tabs.addEventListener("click",e=>{
   document.getElementById("view-coast").classList.toggle("active",key==="coast");
   document.getElementById("view-alps").classList.toggle("active",key==="alps");
   window.scrollTo({top:0,behavior:"auto"});
+  const rm=ROUTEMAPS[key];
+  if(rm){ setTimeout(()=>{ rm.map.invalidateSize(); rm.map.fitBounds(rm.b); },80); }
 });
 
 // back to top
