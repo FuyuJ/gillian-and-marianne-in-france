@@ -56,8 +56,12 @@
 
   /* ---------------- hero map ---------------- */
   .hero .bg{background:var(--sea)}
-  .hero .mapwrap{position:absolute;inset:0}
-  .hero .mapwrap svg{width:100%;height:100%;display:block}
+  .hero .heromap{position:absolute;inset:0;z-index:0;background:var(--sea)}
+  .hero-tint{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(8,34,40,.55) 0%,rgba(8,34,40,.18) 38%,rgba(8,34,40,.5) 100%);
+  }
+  .hero .heromap .leaflet-control-attribution{font-size:9px;opacity:.8}
   .hero .cap{top:7vh;text-align:center;color:#fff;padding:0 24px}
   .hero .eyebrow{
     font-size:11px;letter-spacing:.34em;text-transform:uppercase;
@@ -97,7 +101,12 @@
     gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
   .gallery::-webkit-scrollbar{display:none}
-  .slide{flex:0 0 100%;scroll-snap-align:center;padding:0}
+  .slide{flex:0 0 100%;scroll-snap-align:center;padding:0;position:relative}
+  .slide-cap{
+    position:absolute;left:0;right:0;bottom:34px;z-index:3;text-align:center;
+    color:#fff;font-family:"Inter",sans-serif;font-size:13px;font-weight:600;
+    letter-spacing:.03em;padding:0 18px;text-shadow:0 1px 10px rgba(0,20,24,.75);
+  }
   .slide img{
     width:100%;aspect-ratio:4/5;object-fit:cover;
     display:block;background:#dfe9ea;
@@ -230,7 +239,10 @@ const FILES = {
   annecyCanal:"Canal_%40_Thiou_%40_Old_Town_%40_Annecy_%2848744489443%29.jpg",
   annecyThiou:"Annecy_Pont_sur_le_Thiou_Vue_Panoramique_1.jpg",
   chamonix:"Chamonix_Valley_Panorama.jpg",
-  briancon:"Vauban_briancon_enceinte.JPG"
+  briancon:"Vauban_briancon_enceinte.JPG",
+  galette:"Galette_de_Haute_Bretagne.jpg",
+  oysters:"Oyster_market_at_Cancale%2C_France.jpg",
+  aiguille:"Aiguille_du_Midi_12.jpg"
 };
 
 const DATA = {
@@ -374,6 +386,26 @@ const DATA = {
   }
 };
 
+/* Per-day photo galleries: the day's actual places & activities.
+   Real shots come from Wikimedia; the "images/..." entries are placeholders —
+   drop matching files into an /images folder in the repo to fill them in. */
+const DAY_GALLERIES = {
+  coast:[
+    [ {src:FILES.saintMalo,cap:"Saint-Malo ramparts"}, {src:FILES.galette,cap:"Galettes & cider"}, {src:"images/coast-d1-plage-du-sillon.jpg",cap:"Plage du Sillon"} ],
+    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.dinan,cap:"Rue du Jerzual, Dinan"}, {src:"images/coast-d2-rance-port.jpg",cap:"The port on the Rance"} ],
+    [ {src:FILES.msm,cap:"Mont-Saint-Michel"}, {src:"images/coast-d3-mere-poulard.jpg",cap:"La Mère Poulard omelette"}, {src:"images/coast-d3-bay-crossing.jpg",cap:"Barefoot bay crossing"} ],
+    [ {src:FILES.bayeux,cap:"Bayeux cathedral"}, {src:"images/coast-d4-tapestry.jpg",cap:"The Bayeux Tapestry"}, {src:"images/coast-d4-dday-beach.jpg",cap:"D-Day beaches"} ]
+  ],
+  alps:[
+    [ {src:FILES.lakeAnnecy,cap:"Lake Annecy"}, {src:"images/alps-d1-pont-des-amours.jpg",cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"} ],
+    [ {src:FILES.annecyThiou,cap:"Houses on the Thiou"}, {src:"images/alps-d2-lake-boat.jpg",cap:"Out on the lake"}, {src:FILES.chamonix,cap:"Into Chamonix"} ],
+    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:"images/alps-d3-mer-de-glace.jpg",cap:"Mer de Glace"}, {src:FILES.briancon,cap:"Cité Vauban, Briançon"} ],
+    [ {src:FILES.briancon,cap:"Vauban ramparts"}, {src:"images/alps-d4-old-town.jpg",cap:"Cité Vauban streets"}, {src:"images/alps-d4-col.jpg",cap:"Alpine cols"} ]
+  ]
+};
+DATA.coast.days.forEach((d,i)=>d.gallery=DAY_GALLERIES.coast[i]);
+DATA.alps.days.forEach((d,i)=>d.gallery=DAY_GALLERIES.alps[i]);
+
 /* =================================================================
    FRANCE MAP (shared projection)
 ================================================================= */
@@ -411,7 +443,18 @@ function ev([t,d]){
   if(t==="—") return `<div class="ev"><span class="t"></span><span class="d">${d}</span></div>`;
   return `<div class="ev"><span class="t">${t}</span><span class="d">${d}</span></div>`;
 }
-function dayHTML(d){
+function galleryHTML(gid, items){
+  return `
+  <div class="gallery-wrap">
+    <div class="gallery" data-gallery="${gid}">
+      ${items.map(it=>`<div class="slide"><img loading="lazy" alt="${it.cap||''}" src="${img(it.src,1500)}">${it.cap?`<div class="slide-cap">${it.cap}</div>`:''}</div>`).join("")}
+    </div>
+    <div class="dots" data-dots="${gid}">
+      ${items.map((_,i)=>`<button class="dot ${i===0?'on':''}" data-i="${i}" aria-label="Photo ${i+1}"></button>`).join("")}
+    </div>
+  </div>`;
+}
+function dayHTML(d,gid){
   return `
   <section class="scene day">
     <div class="bg"><img loading="lazy" alt="${d.title}" src="${img(d.bg,2000)}"><div class="day-scrim"></div></div>
@@ -423,6 +466,7 @@ function dayHTML(d){
     <div class="panel">
       <div class="day-body">
         <div class="callout"><span class="ttl">${d.intro.ttl}</span>${d.intro.txt}</div>
+        ${galleryHTML(gid, d.gallery)}
         ${d.sched.map(ev).join("")}
         <div class="opt-h">Options for the day include:</div>
         <ul class="opt">${d.options.map(o=>`<li>${o}</li>`).join("")}</ul>
@@ -436,7 +480,8 @@ function viewHTML(key){
   return `
   <section class="scene hero">
     <div class="bg">
-      <div class="mapwrap" data-map="${key}"></div>
+      <div class="heromap" id="heromap-${key}"></div>
+      <div class="hero-tint"></div>
       <div class="scrollcue">⌄</div>
     </div>
     <div class="cap">
@@ -456,18 +501,11 @@ function viewHTML(key){
       <div style="max-width:720px;margin:0 auto;padding:0 24px">
         <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1700)}">
       </div>
-      <div class="gallery-wrap">
-        <div class="gallery" data-gallery="${key}">
-          ${v.gallery.map(f=>`<div class="slide"><img loading="lazy" alt="" src="${img(f,1500)}"></div>`).join("")}
-        </div>
-        <div class="dots" data-dots="${key}">
-          ${v.gallery.map((_,i)=>`<button class="dot ${i===0?'on':''}" data-i="${i}" aria-label="Photo ${i+1}"></button>`).join("")}
-        </div>
-      </div>
+      ${galleryHTML(key, v.gallery.map(f=>({src:f})))}
     </div>
   </section>
 
-  ${v.days.map(dayHTML).join("")}
+  ${v.days.map((d,i)=>dayHTML(d, key+"-d"+(i+1))).join("")}
 
   <div class="closing">
     <div class="inner">
@@ -484,10 +522,26 @@ function viewHTML(key){
 document.getElementById("view-coast").innerHTML = viewHTML("coast");
 document.getElementById("view-alps").innerHTML  = viewHTML("alps");
 
-// stylised hero maps
-document.querySelectorAll("[data-map]").forEach(el=>{
-  el.innerHTML = heroMap(DATA[el.dataset.map].stops);
-});
+// hero background maps (real tiles, non-interactive) + route line
+const HEROMAPS={};
+function initHeroMap(key){
+  const v=DATA[key];
+  const pts=v.stops.map(s=>[s[0],s[1]]);
+  const map=L.map("heromap-"+key,{
+    zoomControl:false,attributionControl:true,
+    dragging:false,scrollWheelZoom:false,doubleClickZoom:false,
+    boxZoom:false,keyboard:false,touchZoom:false,tap:false
+  });
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    {maxZoom:18,attribution:"&copy; OpenStreetMap, &copy; CARTO"}).addTo(map);
+  L.polyline(pts,{color:"#0d3138",weight:2.5,dashArray:"2 7",opacity:.85}).addTo(map);
+  v.stops.forEach(s=>{
+    L.circleMarker([s[0],s[1]],{radius:5,color:"#0d2127",weight:2,fillColor:"#16808F",fillOpacity:1}).addTo(map);
+  });
+  const b=L.latLngBounds(pts).pad(0.35);
+  map.fitBounds(b);
+  HEROMAPS[key]={map,b};
+}
 
 // real interactive route maps (Leaflet + OpenStreetMap)
 const ROUTEMAPS={};
@@ -506,7 +560,7 @@ function initRouteMap(key){
   map.fitBounds(b);
   ROUTEMAPS[key]={map,b};
 }
-if(window.L){ initRouteMap("coast"); initRouteMap("alps"); }
+if(window.L){ initHeroMap("coast"); initHeroMap("alps"); initRouteMap("coast"); initRouteMap("alps"); }
 
 // graceful image fallback
 function attachFallback(scope){
@@ -548,8 +602,9 @@ tabs.addEventListener("click",e=>{
   document.getElementById("view-coast").classList.toggle("active",key==="coast");
   document.getElementById("view-alps").classList.toggle("active",key==="alps");
   window.scrollTo({top:0,behavior:"auto"});
-  const rm=ROUTEMAPS[key];
-  if(rm){ setTimeout(()=>{ rm.map.invalidateSize(); rm.map.fitBounds(rm.b); },80); }
+  [HEROMAPS[key],ROUTEMAPS[key]].forEach(m=>{
+    if(m){ setTimeout(()=>{ m.map.invalidateSize(); m.map.fitBounds(m.b); },80); }
+  });
 });
 
 // back to top
