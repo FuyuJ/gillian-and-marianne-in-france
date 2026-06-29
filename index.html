@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gillian & Marianne · France 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#1C9DB1;
+    --teal-deep:#16808F;
+    --ink:#2C2B28;
+    --muted:#6F6B64;
+    --line:#E7E2D8;
+    --sea:#2BA3B4;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:#fff;color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Fraunces",Georgia,serif}
+
+  /* ---------------- sticky tabs ---------------- */
+  .tabs{
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;justify-content:center;gap:6px;
+    padding:9px 10px;
+  }
+  .tab{
+    appearance:none;border:none;background:none;cursor:pointer;
+    font-family:"Inter",sans-serif;font-size:13.5px;font-weight:600;
+    letter-spacing:.01em;color:var(--muted);
+    padding:9px 16px;border-radius:999px;white-space:nowrap;
+    transition:.2s;
+  }
+  .tab .ico{display:inline-block;margin-right:6px;opacity:.8}
+  .tab.active{color:#fff;background:var(--teal)}
+
+  /* ---------------- view switching ---------------- */
+  .view{display:none}
+  .view.active{display:block}
+
+  /* ---------------- hero map ---------------- */
+  .hero{
+    position:relative;height:88vh;min-height:540px;overflow:hidden;
+    background:var(--sea);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero .mapwrap{position:absolute;inset:0}
+  .hero .mapwrap svg{width:100%;height:100%;display:block}
+  .hero .overlay{
+    position:relative;z-index:2;text-align:center;color:#fff;
+    padding:0 26px;max-width:760px;
+  }
+  .hero .eyebrow{
+    font-size:12px;letter-spacing:.34em;text-transform:uppercase;
+    font-weight:600;margin-bottom:18px;opacity:.92;
+  }
+  .hero h1{
+    font-family:"Fraunces",serif;font-weight:600;font-style:normal;
+    font-size:clamp(40px,9vw,76px);line-height:1.0;letter-spacing:-.01em;
+    margin:0;text-shadow:0 2px 24px rgba(0,40,46,.35);
+  }
+  .hero .dates{
+    margin-top:20px;font-size:14px;letter-spacing:.04em;font-weight:500;
+    opacity:.95;
+  }
+  .scrollcue{
+    position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+    z-index:2;color:#fff;opacity:.85;font-size:22px;animation:bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+  /* ---------------- overview ---------------- */
+  .section{max-width:720px;margin:0 auto;padding:64px 24px 26px}
+  .section h2{
+    font-family:"Fraunces",serif;font-weight:500;
+    font-size:clamp(30px,6vw,44px);line-height:1.05;margin:0 0 26px;
+    color:var(--ink);
+  }
+  .section p{font-size:17px;line-height:1.85;color:#54514b;margin:0 0 22px}
+  .feature{
+    width:100%;aspect-ratio:16/11;object-fit:cover;display:block;
+    border-radius:4px;margin:6px 0 8px;background:#dfe9ea;
+  }
+
+  /* ---------------- gallery ---------------- */
+  .gallery-wrap{margin:30px 0 8px}
+  .gallery{
+    display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+    gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .gallery::-webkit-scrollbar{display:none}
+  .slide{
+    flex:0 0 100%;scroll-snap-align:center;padding:0 24px;
+  }
+  .slide img{
+    width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;
+    display:block;background:#dfe9ea;
+  }
+  .dots{display:flex;justify-content:center;gap:9px;margin-top:16px}
+  .dot{
+    width:11px;height:11px;border-radius:50%;border:1.5px solid var(--teal);
+    background:transparent;transition:.2s;cursor:pointer;
+  }
+  .dot.on{background:var(--teal)}
+
+  /* ---------------- day: parallax hero ---------------- */
+  .day{position:relative}
+  .day-hero{position:relative;height:128vh}
+  .day-bg{
+    position:sticky;top:0;height:100vh;overflow:hidden;
+  }
+  .day-bg img{width:100%;height:100%;object-fit:cover;display:block;background:#cfe0e2}
+  .day-scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,30,34,.18) 0%,rgba(10,30,34,.05) 40%,rgba(10,30,34,.32) 100%);
+  }
+  .day-cap{
+    position:absolute;top:32vh;left:0;right:0;z-index:3;
+    text-align:center;color:#fff;padding:0 24px;
+    text-shadow:0 2px 26px rgba(0,30,36,.5);
+  }
+  .day-cap .dno{
+    font-family:"Fraunces",serif;font-style:italic;font-weight:500;
+    font-size:clamp(22px,5vw,30px);margin-bottom:4px;
+  }
+  .day-cap h3{
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:clamp(38px,8.4vw,66px);line-height:1.02;margin:0;
+  }
+  .day-cap .ddate{
+    font-family:"Fraunces",serif;font-weight:500;
+    font-size:clamp(20px,4.4vw,28px);margin-top:8px;
+  }
+
+  /* ---------------- day: body ---------------- */
+  .day-body{max-width:720px;margin:0 auto;padding:40px 24px 30px;position:relative;z-index:4;background:#fff}
+  .callout{
+    background:var(--teal);color:#fff;border-radius:3px;
+    padding:20px 22px;font-size:16px;line-height:1.6;margin:0 0 30px;
+  }
+  .callout.alt{background:#2BB0A4}
+  .callout .ttl{font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:13.5px;margin-bottom:8px;display:block}
+  .ev{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .ev:last-child{border-bottom:none}
+  .ev .t{font-weight:600;color:var(--teal-deep);min-width:62px;font-variant-numeric:tabular-nums}
+  .ev .d{color:#54514b;font-size:16px;line-height:1.55}
+  .para{color:#54514b;font-size:16px;line-height:1.7;margin:16px 0}
+  .opt-h{font-weight:600;margin:28px 0 10px;color:var(--ink)}
+  .opt{list-style:none;padding:0;margin:0}
+  .opt li{
+    position:relative;padding:7px 0 7px 22px;color:#54514b;font-size:16px;line-height:1.5;
+    border-bottom:1px solid #F1ECE3;
+  }
+  .opt li::before{content:"–";position:absolute;left:0;color:var(--teal);font-weight:600}
+
+  .day-sep{height:0}
+
+  /* ---------------- closing ---------------- */
+  .closing{background:#F6F2EA;padding:54px 24px 70px;text-align:center}
+  .closing .inner{max-width:620px;margin:0 auto}
+  .closing h2{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(26px,5.5vw,38px);margin:0 0 16px}
+  .closing p{color:#5a564f;font-size:16px;line-height:1.8;margin:0 0 8px}
+  .closing .air{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.7}
+
+  /* ---------------- back to top ---------------- */
+  .totop{
+    position:fixed;right:16px;bottom:18px;z-index:70;
+    width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--teal);color:#fff;font-size:20px;
+    box-shadow:0 8px 22px -8px rgba(0,40,46,.6);
+    opacity:0;pointer-events:none;transition:.25s;
+  }
+  .totop.show{opacity:1;pointer-events:auto}
+
+  @media(min-width:780px){
+    .slide{flex-basis:560px;padding:0 8px}
+    .gallery{padding:0 calc(50% - 280px)}
+    .day-hero{height:130vh}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="coast"><span class="ico">⛵</span>Brittany &amp; Normandy</button>
+    <button class="tab" data-view="alps"><span class="ico">🏔</span>French Alps</button>
+  </nav>
+
+  <main id="view-coast" class="view active"></main>
+  <main id="view-alps" class="view"></main>
+
+  <button class="totop" id="totop" aria-label="Back to top">⌃</button>
+
+<script>
+/* =================================================================
+   DATA
+================================================================= */
+function img(file,w){return `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=${w}`;}
+
+const FILES = {
+  saintMalo:"Ramparts_of_Saint-Malo.jpg",
+  msm:"2017-04_Mont_Saint-Michel_01.jpg",
+  dinan:"Dinan_-_5_rue_du_Jerzual_20130216-02.JPG",
+  bayeux:"Bayeux_Cathedral-all.jpg",
+  lakeAnnecy:"Lac_d%27Annecy_%40_Panorama_du_Rocher_du_Roux_%40_Talloires-Montmin_%2851220488217%29.jpg",
+  annecyCanal:"Canal_%40_Thiou_%40_Old_Town_%40_Annecy_%2848744489443%29.jpg",
+  annecyThiou:"Annecy_Pont_sur_le_Thiou_Vue_Panoramique_1.jpg",
+  chamonix:"Chamonix_Valley_Panorama.jpg",
+  briancon:"Vauban_briancon_enceinte.JPG"
+};
+
+const DATA = {
+  coast:{
+    heroTitle:"Gillian &amp; Marianne's Trip to Brittany &amp; Normandy",
+    dates:"12 – 15 August 2025 · 4 Days, 3 Nights",
+    accent:"#11343d",
+    overviewH:"Brittany &amp; Normandy",
+    overview:[
+      "Brittany and Normandy — a coast of walled cities, tidal islands and big Atlantic skies, where granite ramparts, medieval lanes and oyster ports trade the heat of the south for cool sea air and a thousand years of history.",
+      "Beginning and ending at Paris CDG, this four-day route runs west to the corsair city of Saint-Malo, threads through medieval Dinan and the oyster stalls of Cancale, and reaches the spellbinding abbey of Mont-Saint-Michel before turning back through Normandy."
+    ],
+    feature:FILES.msm,
+    gallery:[FILES.saintMalo,FILES.dinan,FILES.msm,FILES.bayeux],
+    stops:[
+      [49.00,2.55,"PARIS CDG",10,-7,"start"],
+      [48.65,-2.02,"SAINT-MALO",-9,-3,"end"],
+      [48.46,-2.05,"DINAN",-9,13,"end"],
+      [48.636,-1.511,"MONT-ST-MICHEL",9,15,"start"],
+      [49.28,-0.70,"BAYEUX",9,-4,"start"]
+    ],
+    days:[
+      {dno:"Day 1 of 4",title:"Arrival &amp; Saint-Malo",date:"12 August 2025",bg:FILES.saintMalo,
+       intro:{ttl:"On Arrival",txt:"You'll be met at Paris CDG and transferred west to the walled corsair city of Saint-Malo on the Brittany coast — roughly a four-hour journey by car, or by TGV via Rennes."},
+       sched:[
+        ["10:00","Land at Paris CDG; meet your driver or connect to the TGV heading west."],
+        ["13:00","Lunch en route — a first taste of Breton galettes and cider."],
+        ["15:30","Arrive Saint-Malo and settle inside the walls (intra-muros)."],
+        ["17:00","Walk the ramparts as the tide rolls in, with views across to Dinard."],
+        ["20:00","Seaside dinner of just-caught seafood in the old town."]
+       ],
+       options:["Walk the full circuit of the ramparts","Plage du Sillon for a first swim","Grand Aquarium Saint-Malo","Crêpes &amp; cider in a backstreet crêperie"],
+       note:{cls:"alt",ttl:"Easing in",txt:"Saint-Malo's beaches, aquarium and the easy ferry hop to Dinard make for a gentle first day after the flight."}
+      },
+      {dno:"Day 2 of 4",title:"Saint-Malo &amp; Dinan",date:"13 August 2025",bg:FILES.dinan,
+       intro:{ttl:"The Day",txt:"A day split between the sea and the Middle Ages — mornings on the Emerald Coast, afternoons in the beautifully preserved medieval town of Dinan."},
+       sched:[
+        ["08:00","Breakfast, then up onto the ramparts before the crowds."],
+        ["10:00","Drive east to Cancale, the oyster capital, for a dozen straight off the stalls."],
+        ["12:30","Continue to Dinan; lunch in a half-timbered crêperie."],
+        ["14:00","Wander the Rue du Jerzual down to the little port on the Rance."],
+        ["19:30","Return to Saint-Malo for dinner as the walls light up."]
+       ],
+       options:["Oyster tasting at the Cancale market","Kayak or boat trip on the Rance estuary","Château de Dinan &amp; the ramparts walk","Browse the artisan workshops on Rue du Jerzual"],
+       note:{cls:"",ttl:"Good to book",txt:"The Cancale oyster market and the popular crêperies fill up in season — worth reserving ahead."}
+      },
+      {dno:"Day 3 of 4",title:"Mont-Saint-Michel",date:"14 August 2025",bg:FILES.msm,
+       intro:{ttl:"The Day",txt:"One of France's most spectacular sights — a medieval abbey crowning a tidal island that seems to float between sea and sky."},
+       sched:[
+        ["07:30","Early breakfast to beat the day-trippers."],
+        ["09:00","Drive to Mont-Saint-Michel (about 1h15) and cross to the Mount."],
+        ["09:45","Explore the abbey, ramparts and winding village lanes."],
+        ["13:00","Lunch nearby — the famous fluffy omelette of La Mère Poulard."],
+        ["16:00","Continue east toward Normandy, basing in Bayeux for the night."],
+        ["21:00","The Mount illuminated after dark, if staying close."]
+       ],
+       options:["Guided barefoot crossing of the bay at low tide","Abbey evening tour in summer","Time your visit to the high tide for the full island effect","Carry on to Bayeux for the Tapestry next morning"],
+       note:{cls:"",ttl:"Good to book",txt:"Abbey tickets and guided bay crossings should be booked in advance, and tide times checked before you go."}
+      },
+      {dno:"Day 4 of 4",title:"Bayeux &amp; Return to CDG",date:"15 August 2025",bg:FILES.bayeux,
+       intro:{ttl:"Heading Home",txt:"A short Normandy morning before the drive back to Paris — be at CDG by the evening."},
+       sched:[
+        ["08:00","Breakfast in Bayeux."],
+        ["09:00","The Bayeux Tapestry and the great Gothic cathedral."],
+        ["11:00","Set off for Paris CDG (about 3 hours)."],
+        ["—","Arrive CDG in good time for evening flights."]
+       ],
+       options:["A quick stop at the D-Day landing beaches if time allows","Bayeux's old town and waterwheels","Coffee and pastries before the road","Pick up Normandy cider or calvados to take home"],
+       note:{cls:"alt",ttl:"Travel day",txt:"Keep the morning light and pad the drive so the airport never feels rushed."}
+      }
+    ]
+  },
+
+  alps:{
+    heroTitle:"Gillian &amp; Marianne's Trip to the French Alps",
+    dates:"12 – 15 August 2025 · 4 Days, 3 Nights",
+    accent:"#13322a",
+    overviewH:"Annecy &amp; the French Alps",
+    overview:[
+      "The French Alps — turquoise lakes, flower-lined canals and the snows of Mont Blanc, where laid-back lakeside days give way to high-mountain drama and one of Europe's loveliest old towns.",
+      "Beginning and ending at Paris CDG, this four-day route runs south to Annecy and its lake, climbs to Chamonix beneath Mont Blanc, and crosses the high passes to the fortified Cité Vauban of Briançon — the highest town in France — before the long road home."
+    ],
+    feature:FILES.lakeAnnecy,
+    gallery:[FILES.lakeAnnecy,FILES.annecyCanal,FILES.annecyThiou,FILES.chamonix,FILES.briancon],
+    stops:[
+      [49.00,2.55,"PARIS CDG",10,-7,"start"],
+      [45.90,6.13,"ANNECY",-9,0,"end"],
+      [45.92,6.87,"CHAMONIX",9,-5,"start"],
+      [44.90,6.65,"BRIANÇON",9,12,"start"]
+    ],
+    days:[
+      {dno:"Day 1 of 4",title:"Arrival &amp; Annecy",date:"12 August 2025",bg:FILES.lakeAnnecy,
+       intro:{ttl:"On Arrival",txt:"From CDG you'll head south to Annecy, the ‘Venice of the Alps’, where a turquoise lake meets a maze of flower-lined canals — roughly five to six hours by road, or faster by TGV."},
+       sched:[
+        ["10:00","Land at Paris CDG; meet your driver or connect to the TGV south."],
+        ["13:00","Lunch en route through the French countryside."],
+        ["16:30","Arrive Annecy and settle in near the old town."],
+        ["18:00","First stroll along the lakefront and over the Pont des Amours."],
+        ["20:00","Dinner beside the Thiou canal."]
+       ],
+       options:["Lakefront walk in the Jardins de l'Europe","Cross the Pont des Amours at golden hour","Gelato and people-watching in the old town","An evening swim off the Plage d'Albigny"],
+       note:{cls:"alt",ttl:"Easing in",txt:"A relaxed arrival day — the lakeside lawns and gentle old town are ideal for stretching out after the flight."}
+      },
+      {dno:"Day 2 of 4",title:"Annecy to Chamonix",date:"13 August 2025",bg:FILES.annecyThiou,
+       intro:{ttl:"The Day",txt:"A morning among Annecy's canals and waterside houses, then up into the high mountains to Chamonix beneath Mont Blanc."},
+       sched:[
+        ["08:00","Breakfast, then explore the old town's canals and the Palais de l'Île."],
+        ["10:00","Boat trip or swim in Lake Annecy's clear water."],
+        ["12:30","Lunch by the water before heading off."],
+        ["14:00","Drive to Chamonix (about 1h30), Mont Blanc rising ahead."],
+        ["18:00","Settle into Chamonix; an aperitif with mountain views."]
+       ],
+       options:["Lake Annecy boat cruise","Rent bikes along the lakeside path","Visit the Château d'Annecy above the rooftops","Browse the morning market in the old town"],
+       note:{cls:"",ttl:"Good to book",txt:"Lake boat trips and bike hire are busiest at midday in summer — go early."}
+      },
+      {dno:"Day 3 of 4",title:"Chamonix to Briançon",date:"14 August 2025",bg:FILES.chamonix,
+       intro:{ttl:"The Big Mountain Day",txt:"Mont Blanc in the morning, then a scenic drive south over the high passes to the fortified town of Briançon."},
+       sched:[
+        ["07:30","Early breakfast in Chamonix."],
+        ["08:30","Aiguille du Midi cable car to 3,842m for the Mont Blanc panorama."],
+        ["11:00","Back down for coffee, then onto the road south."],
+        ["11:30","Drive to Briançon (about 3 hours over the alpine cols)."],
+        ["16:30","Arrive Briançon; explore the Cité Vauban, the highest town in France."],
+        ["20:00","Dinner in the walled old town."]
+       ],
+       options:["Aiguille du Midi &amp; the ‘Step into the Void’","Montenvers railway to the Mer de Glace","A via ferrata for the adventurous","Walk the Vauban ramparts at sunset"],
+       note:{cls:"",ttl:"Good to book",txt:"Aiguille du Midi tickets sell out — book a morning slot in advance, and check the mountain weather."}
+      },
+      {dno:"Day 4 of 4",title:"Briançon &amp; Return to CDG",date:"15 August 2025",bg:FILES.briancon,
+       intro:{ttl:"Heading Home",txt:"A last alpine morning before the long drive north — this is the big travel day, so an early start matters."},
+       sched:[
+        ["07:00","Early breakfast in the Cité Vauban."],
+        ["08:00","A quick wander of the ramparts and Collégiale for the views."],
+        ["08:30","Set off for Paris CDG (about 6½ hours)."],
+        ["—","Arrive CDG in time for late flights."]
+       ],
+       options:["Sunrise over the forts above town","Grab provisions for the road","A short stop at a col viewpoint en route","Stretch breaks through the Rhône-Alpes countryside"],
+       note:{cls:"alt",ttl:"Travel day",txt:"It's a long haul back — leave Briançon early, share the driving, and build in breaks so you reach the airport with time to spare."}
+      }
+    ]
+  }
+};
+
+/* =================================================================
+   FRANCE MAP (shared projection)
+================================================================= */
+const FR=[[51.05,2.55],[50.8,3.0],[50.35,4.15],[49.8,5.45],[49.5,6.35],[49.2,6.9],[48.97,8.22],[47.9,7.55],[47.45,7.0],[46.95,6.45],[46.4,6.1],[45.9,6.95],[45.13,6.6],[44.2,6.9],[43.75,7.5],[43.55,7.0],[43.05,6.6],[43.12,5.9],[43.35,4.85],[43.0,3.1],[42.45,3.05],[42.5,1.9],[42.55,0.7],[42.8,-0.7],[43.4,-1.6],[44.6,-1.25],[45.6,-1.1],[46.15,-1.25],[46.5,-1.8],[47.3,-2.2],[47.8,-4.4],[48.45,-4.8],[48.7,-3.0],[48.9,-1.5],[49.7,-1.6],[49.5,-1.0],[49.7,0.2],[50.95,1.6],[51.05,2.55]];
+const LON_MIN=-5.4,LAT_MAX=51.4,LAT_MID=46.6,KX=Math.cos(LAT_MID*Math.PI/180);
+const W=360,H=380,PAD=58;
+function bnds(){const xs=[],ys=[];for(const[la,lo]of FR){xs.push((lo-LON_MIN)*KX);ys.push(LAT_MAX-la);}return{mx:Math.min(...xs),Mx:Math.max(...xs),my:Math.min(...ys),My:Math.max(...ys)};}
+const B=bnds(),SX=B.Mx-B.mx,SY=B.My-B.my,S=Math.min((W-2*PAD)/SX,(H-2*PAD)/SY),OX=(W-SX*S)/2,OY=(H-SY*S)/2;
+function pr(la,lo){return[OX+((lo-LON_MIN)*KX-B.mx)*S,OY+((LAT_MAX-la)-B.my)*S];}
+function frPath(){return FR.map((p,i)=>{const[x,y]=pr(p[0],p[1]);return(i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1);}).join(" ")+" Z";}
+
+function heroMap(stops){
+  const pts=stops.map(s=>pr(s[0],s[1]));
+  let line="M"+pts.map(p=>p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" L");
+  const ret="M"+pts[pts.length-1][0].toFixed(1)+" "+pts[pts.length-1][1].toFixed(1)+" L"+pts[0][0].toFixed(1)+" "+pts[0][1].toFixed(1);
+  let dots="";
+  stops.forEach((s,i)=>{
+    const[x,y]=pts[i];const lx=x+s[3],ly=y+s[4],anc=s[5];
+    dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.4" fill="#10242b"/>`;
+    dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8.5" fill="none" stroke="#10242b" stroke-opacity=".35" stroke-width="1"/>`;
+    dots+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anc}" font-family="Inter,sans-serif" font-size="8.4" font-weight="600" letter-spacing=".4" fill="#0c2228">${s[2]}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <path d="${frPath()}" fill="rgba(255,255,255,.06)" stroke="#E4D6B0" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="${ret}" fill="none" stroke="#0d2127" stroke-width="1.6" stroke-dasharray="1 5" stroke-linecap="round" stroke-opacity=".55"/>
+    <path d="${line}" fill="none" stroke="#0d2127" stroke-width="1.8" stroke-dasharray="1.5 5" stroke-linecap="round"/>
+    ${dots}
+  </svg>`;
+}
+
+/* =================================================================
+   RENDER
+================================================================= */
+function ev([t,d]){
+  if(t==="—") return `<div class="ev"><span class="t"></span><span class="d">${d}</span></div>`;
+  return `<div class="ev"><span class="t">${t}</span><span class="d">${d}</span></div>`;
+}
+function dayHTML(d){
+  return `
+  <section class="day">
+    <div class="day-hero">
+      <div class="day-bg"><img loading="lazy" alt="${d.title}" src="${img(d.bg,1500)}"><div class="day-scrim"></div></div>
+      <div class="day-cap">
+        <div class="dno">${d.dno}</div>
+        <h3>${d.title}</h3>
+        <div class="ddate">${d.date}</div>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="callout ${d.intro.ttl?'':''}"><span class="ttl">${d.intro.ttl}</span>${d.intro.txt}</div>
+      ${d.sched.map(ev).join("")}
+      <div class="opt-h">Options for the day include:</div>
+      <ul class="opt">${d.options.map(o=>`<li>${o}</li>`).join("")}</ul>
+      <div class="callout ${d.note.cls}"><span class="ttl">${d.note.ttl}</span>${d.note.txt}</div>
+    </div>
+  </section>`;
+}
+function viewHTML(key){
+  const v=DATA[key];
+  return `
+  <section class="hero">
+    <div class="mapwrap" data-map="${key}"></div>
+    <div class="overlay">
+      <div class="eyebrow">Two Friends · France</div>
+      <h1 class="serif">${v.heroTitle}</h1>
+      <div class="dates">${v.dates}</div>
+    </div>
+    <div class="scrollcue">⌄</div>
+  </section>
+
+  <div class="section">
+    <h2 class="serif">${v.overviewH}</h2>
+    ${v.overview.map(p=>`<p>${p}</p>`).join("")}
+  </div>
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+    <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1400)}">
+  </div>
+
+  <div class="gallery-wrap">
+    <div class="gallery" data-gallery="${key}">
+      ${v.gallery.map(f=>`<div class="slide"><img loading="lazy" alt="" src="${img(f,1000)}"></div>`).join("")}
+    </div>
+    <div class="dots" data-dots="${key}">
+      ${v.gallery.map((_,i)=>`<button class="dot ${i===0?'on':''}" data-i="${i}" aria-label="Photo ${i+1}"></button>`).join("")}
+    </div>
+  </div>
+
+  ${v.days.map(dayHTML).join("")}
+
+  <div class="closing">
+    <div class="inner">
+      <h2 class="serif">Same start &amp; finish: Paris CDG</h2>
+      <p>Both trips begin and end at Paris Charles de Gaulle — land the morning of 12 August and be back at the airport by the night of 15 August.</p>
+      <div class="air">Paris–Charles de Gaulle (IATA: CDG, ICAO: LFPG)</div>
+    </div>
+  </div>`;
+}
+
+/* =================================================================
+   INIT
+================================================================= */
+document.getElementById("view-coast").innerHTML = viewHTML("coast");
+document.getElementById("view-alps").innerHTML  = viewHTML("alps");
+
+// maps
+document.querySelectorAll("[data-map]").forEach(el=>{
+  el.innerHTML = heroMap(DATA[el.dataset.map].stops);
+});
+
+// graceful image fallback
+function attachFallback(scope){
+  scope.querySelectorAll("img").forEach(im=>{
+    im.addEventListener("error",()=>{ im.style.background="linear-gradient(135deg,#cfe0e2,#a9c9cd)"; im.style.objectFit="cover"; });
+  });
+}
+attachFallback(document);
+
+// galleries
+document.querySelectorAll("[data-gallery]").forEach(g=>{
+  const key=g.dataset.gallery;
+  const dots=document.querySelector(`[data-dots="${key}"]`);
+  const dotEls=[...dots.children];
+  let raf=null;
+  g.addEventListener("scroll",()=>{
+    if(raf)return;
+    raf=requestAnimationFrame(()=>{
+      raf=null;
+      const slide=g.querySelector(".slide");
+      const w=slide?slide.getBoundingClientRect().width:g.clientWidth;
+      const idx=Math.round(g.scrollLeft/w);
+      dotEls.forEach((d,i)=>d.classList.toggle("on",i===idx));
+    });
+  },{passive:true});
+  dotEls.forEach(d=>d.addEventListener("click",()=>{
+    const slide=g.querySelector(".slide");
+    const w=slide?slide.getBoundingClientRect().width:g.clientWidth;
+    g.scrollTo({left:w*(+d.dataset.i),behavior:"smooth"});
+  }));
+});
+
+// tabs
+const tabs=document.getElementById("tabs");
+tabs.addEventListener("click",e=>{
+  const b=e.target.closest(".tab"); if(!b)return;
+  const key=b.dataset.view;
+  tabs.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t===b));
+  document.getElementById("view-coast").classList.toggle("active",key==="coast");
+  document.getElementById("view-alps").classList.toggle("active",key==="alps");
+  window.scrollTo({top:0,behavior:"auto"});
+});
+
+// back to top
+const totop=document.getElementById("totop");
+window.addEventListener("scroll",()=>{ totop.classList.toggle("show",window.scrollY>600); },{passive:true});
+totop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+</script>
+</body>
+</html>
