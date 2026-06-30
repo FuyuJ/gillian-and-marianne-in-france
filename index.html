@@ -240,10 +240,10 @@ const FILES = {
   bayeux        : "images/cathedrale-de-bayeux.webp",                     // DAY 4 bg — Bayeux cathedral / old town
   /* — Day 1 gallery: Saint-Malo — */
   galette       : "images/crepe.webp",                                    // buttery Breton crêpes (with cider)
-  saintMaloBeach: "images/drone-sillon-960x560.jpg",              // Plage du Sillon, the long beach
-  saintMaloFort : "images/brittany-saint-malo-beach-hd.jpg",                  // Fort National, reached on foot at low tide
+  saintMaloBeach: "images/drone-sillon-960x560.jpg",                     // Plage du Sillon, the long beach
+  saintMaloFort : "images/brittany-saint-malo-beach-hd.jpg",             // Fort National, reached on foot at low tide
   saintMaloOld  : "images/saint-malo-intramuros.jpg",                     // the lanes inside the walls (intra-muros)
-  dinard        : "images/Dinard_-_Promenade_du_moulinet.jpg",                                    // the belle-époque seafront at Dinard, across the bay
+  dinard        : "images/Dinard_-_Promenade_du_moulinet.jpg",           // the belle-époque seafront at Dinard, across the bay
   /* — Day 2 gallery: Cancale & Dinan — */
   oysters       : "images/oysters.jpg",                                   // oyster stalls / market at Cancale
   cancalePort   : "images/cancale-port.jpg",                              // Cancale harbour & the oyster beds
@@ -279,7 +279,7 @@ const FILES = {
   lakeBoat      : "images/annecy-lake-boat.jpg",                          // a boat trip / swim on Lake Annecy
   annecyBikes   : "images/annecy-bike-path.jpg",                          // the lakeside cycle path
   annecyMarket  : "images/annecy-market.jpg",                             // the morning market in the old town
-  chamonixFood  : "images/chamonix_food.webp",                            // chamonix food 
+  chamonixFood  : "images/chamonix_food.webp",                            // Savoyard mountain food in Chamonix
   chamonixArr   : "images/chamonix-valley-road.jpg",                      // the drive up into the mountains
   chamonixTown  : "images/chamonix-town.jpg",                             // Chamonix town with Mont Blanc above
   /* — Day 3 gallery: high mountains — */
@@ -288,7 +288,7 @@ const FILES = {
   aiguilleVoid  : "images/step-into-the-void.jpg",                        // the glass 'Step into the Void' box
   montenvers    : "images/montenvers-railway.jpg",                        // the little red Montenvers rack railway
   passDrive     : "images/alpine-pass-drive.jpg",                         // the scenic drive south over the high cols
-  ferrata       : "images/ferrata.jpg"                                    // via ferrata
+  ferrata       : "images/ferrata.jpg",                                   // a via ferrata route in the mountains
   /* — Day 4 gallery: Briançon & home — */
   brianconTown  : "images/briancon-old-town.jpg",                         // streets of the Cité Vauban
   col           : "images/alpine-col.jpg",                                // a high alpine col / mountain-pass viewpoint
@@ -353,7 +353,7 @@ const DATA = {
        note:{cls:"",ttl:"Good to book",txt:"Abbey tickets and guided bay crossings should be booked in advance, and tide times checked before you go."}
       },
       {dno:"Day 4 of 4",title:"Bayeux &amp; Return to CDG",date:"15 August 2026",bg:FILES.bayeux,
-       intro:{ttl:"Heading Home",txt:"With the flight home not until the morning of the 16th, there's no rush — enjoy a full Normandy day, then make the easy drive back to Paris in the evening and reach CDG late that night."},
+       intro:{ttl:"Heading Home",txt:"A relaxed last morning in Normandy, then the easy run back to Paris — arriving near CDG in the evening, with the flight the following morning."},
        sched:[
         ["09:00","A relaxed breakfast in Bayeux."],
         ["10:00","The Bayeux Tapestry and the great Gothic cathedral."],
@@ -362,7 +362,7 @@ const DATA = {
         ["~21:00","Arrive and overnight near the airport for the morning flight."]
        ],
        options:["The D-Day landing beaches, with the extra afternoon","Bayeux's old town and waterwheels","A long, unhurried lunch before the road","Pick up Normandy cider or calvados to take home"],
-       note:{cls:"alt",ttl:"No late dash",txt:"Because you fly on the 16th, you can drive back at an easy pace and sleep near CDG — the airport never feels rushed."}
+       note:{cls:"alt",ttl:"Easy does it",txt:"Drive back at an unhurried pace and stay near the airport, so the morning is a short, calm hop to the gate."}
       }
     ]
   },
@@ -421,7 +421,7 @@ const DATA = {
        note:{cls:"",ttl:"Good to book",txt:"Aiguille du Midi tickets sell out — book a morning slot in advance, and check the mountain weather."}
       },
       {dno:"Day 4 of 4",title:"Briançon &amp; the Journey Home",date:"15 August 2026",bg:FILES.briancon,
-       intro:{ttl:"Heading Home",txt:"With the flight home on the morning of the 16th, the long way north is far gentler — enjoy a last alpine morning, then either drive or take the evening Briançon–Paris night train, arriving rested in the early hours."},
+       intro:{ttl:"Heading Home",txt:"A last alpine morning, then the long journey north — either the scenic drive or, even better, the overnight Briançon–Paris train that has you back near the capital by morning."},
        sched:[
         ["09:00","A slow breakfast in the Cité Vauban."],
         ["10:30","Last wander of the ramparts and the forts above town."],
@@ -430,7 +430,7 @@ const DATA = {
         ["overnight","The Briançon–Paris night train rolls in around dawn — step off near CDG for the morning flight."]
        ],
        options:["Take the Briançon–Paris night train instead of the long drive","Sunrise over the forts above the old town","A col viewpoint or lake stop if you drive","Provisions and a picnic for the journey"],
-       note:{cls:"alt",ttl:"Let the train do the work",txt:"The overnight train turns the long haul into a night's sleep — or split the drive with a stop. Either way you only need to be at CDG for the morning of the 16th."}
+       note:{cls:"alt",ttl:"Let the train do the work",txt:"The overnight Briançon–Paris train turns the long haul into a night's sleep. Prefer to drive? Split it with a stop along the way."}
       }
     ]
   }
@@ -448,8 +448,8 @@ const DAY_GALLERIES = {
   ],
   alps:[
     [ {src:FILES.pontAmours,cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"}, {src:FILES.palaisIle,cap:"Palais de l'Île"}, {src:FILES.annecyGelato,cap:"Gelato in the old town"}, {src:FILES.albigny,cap:"Evening by the lake"} ],
-    [ {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.annecyBikes,cap:"Lakeside bike path"}, {src:FILES.annecyMarket,cap:"The morning market"}, {src:FILES.chamonixFood, cap:""},{src:FILES.chamonixArr,cap:"Into the mountains"}, {src:FILES.chamonixTown,cap:"Chamonix & Mont Blanc"} ],
-    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.aiguilleVoid,cap:"Step into the Void"}, {src:FILES.montenvers,cap:"Montenvers railway"}, {src:FILES.ferrata,cap:"Via Ferrata"}, {src:FILES.passDrive,cap:"Over the high passes"} ],
+    [ {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.annecyBikes,cap:"Lakeside bike path"}, {src:FILES.annecyMarket,cap:"The morning market"}, {src:FILES.chamonixFood,cap:"Savoyard mountain food"}, {src:FILES.chamonixArr,cap:"Into the mountains"}, {src:FILES.chamonixTown,cap:"Chamonix & Mont Blanc"} ],
+    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.aiguilleVoid,cap:"Step into the Void"}, {src:FILES.montenvers,cap:"Montenvers railway"}, {src:FILES.ferrata,cap:"Via ferrata"}, {src:FILES.passDrive,cap:"Over the high passes"} ],
     [ {src:FILES.brianconTown,cap:"Cité Vauban streets"}, {src:FILES.col,cap:"Alpine cols"}, {src:FILES.brianconForts,cap:"The forts above town"}, {src:FILES.collegiale,cap:"Collégiale & ramparts"}, {src:FILES.nightTrain,cap:"Night train home"} ]
   ]
 };
