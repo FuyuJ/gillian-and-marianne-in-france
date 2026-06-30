@@ -294,6 +294,7 @@ const FILES = {
   col           : "images/alpine-col.jpg",                                // a high alpine col / mountain-pass viewpoint
   brianconForts : "images/briancon-forts.jpg",                            // the Vauban forts on the heights above town
   collegiale    : "images/briancon-collegiale.jpg",                       // the Collégiale & ramparts of Briançon
+  brianconFood  : "images/briancon_food.jpg",                             // a hearty meal in the Cité Vauban
   nightTrain    : "images/night-train.jpg"                                // the overnight train from Briançon toward Paris
 };
 
@@ -324,7 +325,7 @@ const DATA = {
         ["17:00","Walk the ramparts as the tide rolls in, with views across to Dinard."],
         ["20:00","Seaside dinner of just-caught seafood in the old town."]
        ],
-       options:["Walk the full circuit of the ramparts","Plage du Sillon for a first swim","Grand Aquarium Saint-Malo","Crêpes &amp; cider in a backstreet crêperie"],
+       options:["Walk the full circuit of the ramparts","Walk out to Fort National at low tide","Plage du Sillon for a first swim","Grand Aquarium Saint-Malo","Crêpes &amp; cider in a backstreet crêperie"],
        note:{cls:"alt",ttl:"Easing in",txt:"Saint-Malo's beaches, aquarium and the easy ferry hop to Dinard make for a gentle first day after the flight."}
       },
       {dno:"Day 2 of 4",title:"Saint-Malo &amp; Dinan",date:"13 August 2026",bg:FILES.dinan,
@@ -349,7 +350,7 @@ const DATA = {
         ["16:00","Continue east toward Normandy, basing in Bayeux for the night."],
         ["21:00","The Mount illuminated after dark, if staying close."]
        ],
-       options:["Guided barefoot crossing of the bay at low tide","Abbey evening tour in summer","Time your visit to the high tide for the full island effect","Carry on to Bayeux for the Tapestry next morning"],
+       options:["Guided barefoot crossing of the bay at low tide","Abbey evening tour in summer","The famous La Mère Poulard omelette for lunch","Time your visit to the high tide for the full island effect","Carry on to Bayeux for the Tapestry next morning"],
        note:{cls:"",ttl:"Good to book",txt:"Abbey tickets and guided bay crossings should be booked in advance, and tide times checked before you go."}
       },
       {dno:"Day 4 of 4",title:"Bayeux &amp; Return to CDG",date:"15 August 2026",bg:FILES.bayeux,
@@ -392,7 +393,7 @@ const DATA = {
         ["18:00","First stroll along the lakefront and over the Pont des Amours."],
         ["20:00","Dinner beside the Thiou canal."]
        ],
-       options:["Lakefront walk in the Jardins de l'Europe","Cross the Pont des Amours at golden hour","Gelato and people-watching in the old town","An evening swim off the Plage d'Albigny"],
+       options:["Lakefront walk in the Jardins de l'Europe","Cross the Pont des Amours at golden hour","See the Palais de l'Île in the canal","Gelato and people-watching in the old town","An evening swim off the Plage d'Albigny"],
        note:{cls:"alt",ttl:"Easing in",txt:"A relaxed arrival day — the lakeside lawns and gentle old town are ideal for stretching out after the flight."}
       },
       {dno:"Day 2 of 4",title:"Annecy to Chamonix",date:"13 August 2026",bg:FILES.annecyThiou,
@@ -404,7 +405,7 @@ const DATA = {
         ["14:00","Drive to Chamonix (about 1h30), Mont Blanc rising ahead."],
         ["18:00","Settle into Chamonix; an aperitif with mountain views."]
        ],
-       options:["Lake Annecy boat cruise","Rent bikes along the lakeside path","Visit the Château d'Annecy above the rooftops","Browse the morning market in the old town"],
+       options:["Lake Annecy boat cruise","Rent bikes along the lakeside path","Visit the Château d'Annecy above the rooftops","Browse the morning market in the old town","A first Savoyard meal — fondue or tartiflette"],
        note:{cls:"",ttl:"Good to book",txt:"Lake boat trips and bike hire are busiest at midday in summer — go early."}
       },
       {dno:"Day 3 of 4",title:"Chamonix to Briançon",date:"14 August 2026",bg:FILES.chamonix,
@@ -429,7 +430,7 @@ const DATA = {
         ["17:00","Either set off on the drive north, or board the evening train toward Paris."],
         ["overnight","The Briançon–Paris night train rolls in around dawn — step off near CDG for the morning flight."]
        ],
-       options:["Take the Briançon–Paris night train instead of the long drive","Sunrise over the forts above the old town","A col viewpoint or lake stop if you drive","Provisions and a picnic for the journey"],
+       options:["Take the Briançon–Paris night train instead of the long drive","Wander the Collégiale and Vauban ramparts","A last hearty meal in the Cité Vauban","Sunrise over the forts above the old town","A col viewpoint or lake stop if you drive","Provisions and a picnic for the journey"],
        note:{cls:"alt",ttl:"Let the train do the work",txt:"The overnight Briançon–Paris train turns the long haul into a night's sleep. Prefer to drive? Split it with a stop along the way."}
       }
     ]
@@ -441,16 +442,16 @@ const DATA = {
    drop matching files into an /images folder in the repo to fill them in. */
 const DAY_GALLERIES = {
   coast:[
-    [ {src:FILES.galette,cap:"Crêpes & cider"}, {src:FILES.saintMaloBeach,cap:"Plage du Sillon"}, {src:FILES.saintMaloFort,cap:"Fort National at low tide"}, {src:FILES.saintMaloOld,cap:"Inside the walls"}, {src:FILES.dinard,cap:"Across to Dinard"} ],
-    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.cancalePort,cap:"Cancale harbour"}, {src:FILES.ranceKayak,cap:"Kayaking the Rance"}, {src:FILES.dinanPort,cap:"The port on the Rance"}, {src:FILES.dinanOld,cap:"Dinan's old town"} ],
-    [ {src:FILES.poulard,cap:"La Mère Poulard omelette"}, {src:FILES.bayCrossing,cap:"Barefoot bay crossing"}, {src:FILES.msmCloister,cap:"The abbey cloisters"}, {src:FILES.msmVillage,cap:"Village lanes & ramparts"}, {src:FILES.msmNight,cap:"The Mount after dark"} ],
-    [ {src:FILES.tapestry,cap:"The Bayeux Tapestry"}, {src:FILES.dday,cap:"D-Day beaches"}, {src:FILES.bayeuxOld,cap:"Waterwheels & old town"}, {src:FILES.calvados,cap:"Cider & calvados"}, {src:FILES.normandyRoad,cap:"The road back"} ]
+    [ {src:FILES.galette}, {src:FILES.saintMaloBeach}, {src:FILES.saintMaloFort}, {src:FILES.saintMaloOld}, {src:FILES.dinard} ],
+    [ {src:FILES.cancalePort}, {src:FILES.oysters}, {src:FILES.ranceKayak}, {src:FILES.dinanPort}, {src:FILES.dinanOld} ],
+    [ {src:FILES.bayCrossing}, {src:FILES.poulard}, {src:FILES.msmCloister}, {src:FILES.msmVillage}, {src:FILES.msmNight} ],
+    [ {src:FILES.tapestry}, {src:FILES.dday}, {src:FILES.calvados}, {src:FILES.bayeuxOld}, {src:FILES.normandyRoad} ]
   ],
   alps:[
-    [ {src:FILES.pontAmours,cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"}, {src:FILES.palaisIle,cap:"Palais de l'Île"}, {src:FILES.annecyGelato,cap:"Gelato in the old town"}, {src:FILES.albigny,cap:"Evening by the lake"} ],
-    [ {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.annecyBikes,cap:"Lakeside bike path"}, {src:FILES.annecyMarket,cap:"The morning market"}, {src:FILES.chamonixFood,cap:"Savoyard mountain food"}, {src:FILES.chamonixArr,cap:"Into the mountains"}, {src:FILES.chamonixTown,cap:"Chamonix & Mont Blanc"} ],
-    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.aiguilleVoid,cap:"Step into the Void"}, {src:FILES.montenvers,cap:"Montenvers railway"}, {src:FILES.ferrata,cap:"Via ferrata"}, {src:FILES.passDrive,cap:"Over the high passes"} ],
-    [ {src:FILES.brianconTown,cap:"Cité Vauban streets"}, {src:FILES.col,cap:"Alpine cols"}, {src:FILES.brianconForts,cap:"The forts above town"}, {src:FILES.collegiale,cap:"Collégiale & ramparts"}, {src:FILES.nightTrain,cap:"Night train home"} ]
+    [ {src:FILES.pontAmours}, {src:FILES.annecyCanal}, {src:FILES.palaisIle}, {src:FILES.annecyGelato}, {src:FILES.albigny} ],
+    [ {src:FILES.lakeBoat}, {src:FILES.annecyBikes}, {src:FILES.annecyMarket}, {src:FILES.chamonixFood}, {src:FILES.chamonixArr}, {src:FILES.chamonixTown} ],
+    [ {src:FILES.aiguille}, {src:FILES.merDeGlace}, {src:FILES.aiguilleVoid}, {src:FILES.montenvers}, {src:FILES.ferrata}, {src:FILES.passDrive} ],
+    [ {src:FILES.brianconTown}, {src:FILES.col}, {src:FILES.brianconFood}, {src:FILES.brianconForts}, {src:FILES.collegiale}, {src:FILES.nightTrain} ]
   ]
 };
 DATA.coast.days.forEach((d,i)=>d.gallery=DAY_GALLERIES.coast[i]);
