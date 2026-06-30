@@ -221,28 +221,45 @@
    DATA
 ================================================================= */
 /* --- PHOTOS ---
-   To use your own higher-res pictures: make an /images folder in the repo, drop
-   files in, and replace any value in FILES below with e.g. "images/saint-malo.jpg".
-   Any value that already looks like a local path or full URL is used as-is;
-   everything else is pulled from Wikimedia Commons at the requested width. */
+   Every picture on the site is loaded from an /images folder in your repo.
+   Make a folder called "images", then add a file for each entry in FILES
+   below (filenames must match exactly — the comment beside each says what
+   the shot should be, and the on-screen caption matches). Until a file
+   exists, that slot shows a soft gradient card with its caption. */
 function img(file,w){
   if(/^(images\/|\.?\/|https?:)/i.test(file)) return file;
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${file}?width=${w}`;
 }
 
 const FILES = {
-  saintMalo:"Ramparts_of_Saint-Malo.jpg",
-  msm:"2017-04_Mont_Saint-Michel_01.jpg",
-  dinan:"Dinan_-_5_rue_du_Jerzual_20130216-02.JPG",
-  bayeux:"Bayeux_Cathedral-all.jpg",
-  lakeAnnecy:"Lac_d%27Annecy_%40_Panorama_du_Rocher_du_Roux_%40_Talloires-Montmin_%2851220488217%29.jpg",
-  annecyCanal:"Canal_%40_Thiou_%40_Old_Town_%40_Annecy_%2848744489443%29.jpg",
-  annecyThiou:"Annecy_Pont_sur_le_Thiou_Vue_Panoramique_1.jpg",
-  chamonix:"Chamonix_Valley_Panorama.jpg",
-  briancon:"Vauban_briancon_enceinte.JPG",
-  galette:"Galette_de_Haute_Bretagne.jpg",
-  oysters:"Oyster_market_at_Cancale%2C_France.jpg",
-  aiguille:"Aiguille_du_Midi_12.jpg"
+  /* — Brittany & Normandy — */
+  coastOverview : "images/Mont_St_Michel_Couverture.jpeg",        // wide hero shot for the coast trip (e.g. Mont-Saint-Michel or the Saint-Malo coastline)
+  saintMalo     : "images/brittany-saint-malo-hd.jpg",   // Saint-Malo: the walled city & sea ramparts
+  saintMaloBeach: "images/brittany-saint-malo-beach-hd.jpg",     // Plage du Sillon, the long beach at Saint-Malo
+  galette       : "images/Breakfast-Crepes-27.webp",        // a Breton galette / crêpe with a bowl of cider
+  oysters       : "images/cancale-oysters.jpg",       // oyster stalls / market at Cancale
+  dinan         : "images/dinan-jerzual.jpg",         // Dinan: the medieval Rue du Jerzual
+  dinanPort     : "images/dinan-rance-port.jpg",      // the little port on the Rance below Dinan
+  msm           : "images/Mont_St_Michel_Couverture.jpeg",     // Mont-Saint-Michel abbey on its tidal island
+  poulard       : "images/mere-poulard-omelette.jpg", // the famous fluffy La Mère Poulard omelette
+  bayCrossing   : "images/msm-bay-crossing.jpg",      // barefoot guided crossing of the bay at low tide
+  bayeux        : "images/bayeux-cathedral.jpg",      // Bayeux cathedral / old town
+  tapestry      : "images/bayeux-tapestry.jpg",       // the Bayeux Tapestry
+  dday          : "images/dday-beach.jpg",            // a Normandy D-Day landing beach
+
+  /* — French Alps — */
+  alpsOverview  : "images/alps-overview.jpg",         // wide hero shot for the Alps trip (e.g. Lake Annecy or Mont Blanc)
+  lakeAnnecy    : "images/lake-annecy.jpg",           // turquoise Lake Annecy ringed by peaks
+  pontAmours    : "images/annecy-pont-des-amours.jpg",// the Pont des Amours / Annecy lakefront
+  annecyCanal   : "images/annecy-canals.jpg",         // flower-lined canals in Annecy old town
+  annecyThiou   : "images/annecy-thiou-houses.jpg",   // coloured houses along the Thiou river
+  lakeBoat      : "images/annecy-lake-boat.jpg",      // a boat trip / swim on Lake Annecy
+  chamonix      : "images/chamonix-mont-blanc.jpg",   // Chamonix valley beneath Mont Blanc
+  aiguille      : "images/aiguille-du-midi.jpg",      // Aiguille du Midi summit / Mont Blanc panorama
+  merDeGlace    : "images/mer-de-glace.jpg",          // the Mer de Glace glacier (Montenvers)
+  briancon      : "images/briancon-vauban.jpg",       // Vauban ramparts of Briançon (Cité Vauban)
+  brianconTown  : "images/briancon-old-town.jpg",     // streets of the Cité Vauban, Briançon
+  col           : "images/alpine-col.jpg"             // a high alpine col / mountain-pass viewpoint
 };
 
 const DATA = {
@@ -255,8 +272,8 @@ const DATA = {
       "Brittany and Normandy — a coast of walled cities, tidal islands and big Atlantic skies, where granite ramparts, medieval lanes and oyster ports trade the heat of the south for cool sea air and a thousand years of history.",
       "Beginning and ending at Paris CDG, this four-day route runs west to the corsair city of Saint-Malo, threads through medieval Dinan and the oyster stalls of Cancale, and reaches the spellbinding abbey of Mont-Saint-Michel before turning back through Normandy."
     ],
-    feature:FILES.msm,
-    gallery:[FILES.saintMalo,FILES.dinan,FILES.msm,FILES.bayeux],
+    feature:FILES.coastOverview,
+    gallery:[{src:FILES.saintMalo,cap:"Saint-Malo"},{src:FILES.dinan,cap:"Dinan"},{src:FILES.msm,cap:"Mont-Saint-Michel"},{src:FILES.bayeux,cap:"Bayeux"}],
     stops:[
       [49.00,2.55,"PARIS CDG",10,-7,"start"],
       [48.65,-2.02,"SAINT-MALO",-9,-3,"end"],
@@ -325,8 +342,8 @@ const DATA = {
       "The French Alps — turquoise lakes, flower-lined canals and the snows of Mont Blanc, where laid-back lakeside days give way to high-mountain drama and one of Europe's loveliest old towns.",
       "Beginning and ending at Paris CDG, this four-day route runs south to Annecy and its lake, climbs to Chamonix beneath Mont Blanc, and crosses the high passes to the fortified Cité Vauban of Briançon — the highest town in France — before the long road home."
     ],
-    feature:FILES.lakeAnnecy,
-    gallery:[FILES.lakeAnnecy,FILES.annecyCanal,FILES.annecyThiou,FILES.chamonix,FILES.briancon],
+    feature:FILES.alpsOverview,
+    gallery:[{src:FILES.lakeAnnecy,cap:"Lake Annecy"},{src:FILES.annecyCanal,cap:"Annecy canals"},{src:FILES.annecyThiou,cap:"Houses on the Thiou"},{src:FILES.chamonix,cap:"Chamonix"},{src:FILES.briancon,cap:"Briançon"}],
     stops:[
       [49.00,2.55,"PARIS CDG",10,-7,"start"],
       [45.90,6.13,"ANNECY",-9,0,"end"],
@@ -391,16 +408,16 @@ const DATA = {
    drop matching files into an /images folder in the repo to fill them in. */
 const DAY_GALLERIES = {
   coast:[
-    [ {src:FILES.saintMalo,cap:"Saint-Malo ramparts"}, {src:FILES.galette,cap:"Galettes & cider"}, {src:"images/coast-d1-plage-du-sillon.jpg",cap:"Plage du Sillon"} ],
-    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.dinan,cap:"Rue du Jerzual, Dinan"}, {src:"images/coast-d2-rance-port.jpg",cap:"The port on the Rance"} ],
-    [ {src:FILES.msm,cap:"Mont-Saint-Michel"}, {src:"images/coast-d3-mere-poulard.jpg",cap:"La Mère Poulard omelette"}, {src:"images/coast-d3-bay-crossing.jpg",cap:"Barefoot bay crossing"} ],
-    [ {src:FILES.bayeux,cap:"Bayeux cathedral"}, {src:"images/coast-d4-tapestry.jpg",cap:"The Bayeux Tapestry"}, {src:"images/coast-d4-dday-beach.jpg",cap:"D-Day beaches"} ]
+    [ {src:FILES.saintMalo,cap:"Saint-Malo ramparts"}, {src:FILES.galette,cap:"Galettes & cider"}, {src:FILES.saintMaloBeach,cap:"Plage du Sillon"} ],
+    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.dinan,cap:"Rue du Jerzual, Dinan"}, {src:FILES.dinanPort,cap:"The port on the Rance"} ],
+    [ {src:FILES.msm,cap:"Mont-Saint-Michel"}, {src:FILES.poulard,cap:"La Mère Poulard omelette"}, {src:FILES.bayCrossing,cap:"Barefoot bay crossing"} ],
+    [ {src:FILES.bayeux,cap:"Bayeux cathedral"}, {src:FILES.tapestry,cap:"The Bayeux Tapestry"}, {src:FILES.dday,cap:"D-Day beaches"} ]
   ],
   alps:[
-    [ {src:FILES.lakeAnnecy,cap:"Lake Annecy"}, {src:"images/alps-d1-pont-des-amours.jpg",cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"} ],
-    [ {src:FILES.annecyThiou,cap:"Houses on the Thiou"}, {src:"images/alps-d2-lake-boat.jpg",cap:"Out on the lake"}, {src:FILES.chamonix,cap:"Into Chamonix"} ],
-    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:"images/alps-d3-mer-de-glace.jpg",cap:"Mer de Glace"}, {src:FILES.briancon,cap:"Cité Vauban, Briançon"} ],
-    [ {src:FILES.briancon,cap:"Vauban ramparts"}, {src:"images/alps-d4-old-town.jpg",cap:"Cité Vauban streets"}, {src:"images/alps-d4-col.jpg",cap:"Alpine cols"} ]
+    [ {src:FILES.lakeAnnecy,cap:"Lake Annecy"}, {src:FILES.pontAmours,cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"} ],
+    [ {src:FILES.annecyThiou,cap:"Houses on the Thiou"}, {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.chamonix,cap:"Into Chamonix"} ],
+    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.briancon,cap:"Cité Vauban, Briançon"} ],
+    [ {src:FILES.briancon,cap:"Vauban ramparts"}, {src:FILES.brianconTown,cap:"Cité Vauban streets"}, {src:FILES.col,cap:"Alpine cols"} ]
   ]
 };
 DATA.coast.days.forEach((d,i)=>d.gallery=DAY_GALLERIES.coast[i]);
@@ -501,7 +518,7 @@ function viewHTML(key){
       <div style="max-width:720px;margin:0 auto;padding:0 24px">
         <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1700)}">
       </div>
-      ${galleryHTML(key, v.gallery.map(f=>({src:f})))}
+      ${galleryHTML(key, v.gallery)}
     </div>
   </section>
 
