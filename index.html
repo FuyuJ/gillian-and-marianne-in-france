@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gillian & Marianne · France 2025</title>
+<title>Gillian & Marianne · France 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -232,48 +232,79 @@ function img(file,w){
 }
 
 const FILES = {
-  /* — Brittany & Normandy — */
-  coastOverview : "images/Mont_St_Michel_Couverture.jpeg",        // wide hero shot for the coast trip (e.g. Mont-Saint-Michel or the Saint-Malo coastline)
-  saintMalo     : "images/brittany-saint-malo-hd.jpg",   // Saint-Malo: the walled city & sea ramparts
-  saintMaloBeach: "images/brittany-saint-malo-beach-hd.jpg",     // Plage du Sillon, the long beach at Saint-Malo
-  galette       : "images/crepe.webp",        // a Breton galette / crêpe with a bowl of cider
-  oysters       : "images/oysters.jpg",       // oyster stalls / market at Cancale
-  dinan         : "images/dinan.jpg",         // Dinan: the medieval Rue du Jerzual
-  dinanPort     : "images/brittany-dinan-hd.jpg",      // the little port on the Rance below Dinan
-  msm           : "images/Mont_St_Michel_Couverture.jpeg",     // Mont-Saint-Michel abbey on its tidal island
-  poulard       : "images/La-Mere-Poulard-Omelet.jpg", // the famous fluffy La Mère Poulard omelette
-  bayCrossing   : "images/marcheur-baie-mont-saint-michel-e-berthier.jpg",      // barefoot guided crossing of the bay at low tide
-  bayeux        : "images/cathedrale-de-bayeux.webp",      // Bayeux cathedral / old town
-  tapestry      : "images/tapisserie-de-bayeux-tapestry.webp",       // the Bayeux Tapestry
-  dday          : "images/d-day-beaches.webp",            // a Normandy D-Day landing beach
+  /* ===================== BRITTANY & NORMANDY ===================== */
+  /* — full-screen day backgrounds — */
+  saintMalo     : "images/brittany-saint-malo-hd.jpg",                    // DAY 1 bg — Saint-Malo walled city & sea ramparts
+  dinan         : "images/dinan.jpg",                                     // DAY 2 bg — Dinan, the medieval Rue du Jerzual
+  msm           : "images/Mont_St_Michel_Couverture.jpeg",                // DAY 3 bg — Mont-Saint-Michel on its tidal island
+  bayeux        : "images/cathedrale-de-bayeux.webp",                     // DAY 4 bg — Bayeux cathedral / old town
+  /* — Day 1 gallery: Saint-Malo — */
+  galette       : "images/crepe.webp",                                    // buttery Breton crêpes (with cider)
+  saintMaloBeach: "images/brittany-saint-malo-beach-hd.jpg",              // Plage du Sillon, the long beach
+  saintMaloFort : "images/saint-malo-fort-national.jpg",                  // Fort National, reached on foot at low tide
+  saintMaloOld  : "images/saint-malo-intramuros.jpg",                     // the lanes inside the walls (intra-muros)
+  dinard        : "images/dinard.jpg",                                    // the belle-époque seafront at Dinard, across the bay
+  /* — Day 2 gallery: Cancale & Dinan — */
+  oysters       : "images/oysters.jpg",                                   // oyster stalls / market at Cancale
+  cancalePort   : "images/cancale-port.jpg",                              // Cancale harbour & the oyster beds
+  ranceKayak    : "images/rance-kayak.jpg",                               // kayaking / boating on the Rance estuary
+  dinanPort     : "images/brittany-dinan-hd.jpg",                         // the little port on the Rance below Dinan
+  dinanOld      : "images/dinan-old-town.jpg",                            // Dinan's half-timbered houses & market square
+  /* — Day 3 gallery: Mont-Saint-Michel — */
+  poulard       : "images/La-Mere-Poulard-Omelet.jpg",                    // the famous fluffy La Mère Poulard omelette
+  bayCrossing   : "images/marcheur-baie-mont-saint-michel-e-berthier.jpg",// barefoot guided crossing of the bay at low tide
+  msmCloister   : "images/mont-saint-michel-cloisters.jpg",               // the abbey cloisters / interior
+  msmVillage    : "images/mont-saint-michel-village.jpg",                 // village lanes & ramparts climbing the Mount
+  msmNight      : "images/mont-saint-michel-night.jpg",                   // the Mount illuminated after dark
+  /* — Day 4 gallery: Bayeux & Normandy — */
+  tapestry      : "images/tapisserie-de-bayeux-tapestry.webp",            // the Bayeux Tapestry
+  dday          : "images/d-day-beaches.webp",                            // a Normandy D-Day landing beach
+  bayeuxOld     : "images/bayeux-old-town.jpg",                           // Bayeux waterwheels & old town
+  calvados      : "images/calvados-cider.jpg",                            // Normandy cider & calvados
+  normandyRoad  : "images/normandy-countryside.jpg",                      // the countryside drive back toward Paris
 
-  /* — French Alps — */
-  alpsOverview  : "images/alps-overview.jpg",         // wide hero shot for the Alps trip (e.g. Lake Annecy or Mont Blanc)
-  lakeAnnecy    : "images/lake-annecy.jpg",           // turquoise Lake Annecy ringed by peaks
-  pontAmours    : "images/annecy-pont-des-amours.jpg",// the Pont des Amours / Annecy lakefront
-  annecyCanal   : "images/annecy-canals.jpg",         // flower-lined canals in Annecy old town
-  annecyThiou   : "images/annecy-thiou-houses.jpg",   // coloured houses along the Thiou river
-  lakeBoat      : "images/annecy-lake-boat.jpg",      // a boat trip / swim on Lake Annecy
-  chamonix      : "images/chamonix-mont-blanc.jpg",   // Chamonix valley beneath Mont Blanc
-  aiguille      : "images/aiguille-du-midi.jpg",      // Aiguille du Midi summit / Mont Blanc panorama
-  merDeGlace    : "images/mer-de-glace.jpg",          // the Mer de Glace glacier (Montenvers)
-  briancon      : "images/briancon-vauban.jpg",       // Vauban ramparts of Briançon (Cité Vauban)
-  brianconTown  : "images/briancon-old-town.jpg",     // streets of the Cité Vauban, Briançon
-  col           : "images/alpine-col.jpg"             // a high alpine col / mountain-pass viewpoint
+  /* ===================== FRENCH ALPS ===================== */
+  /* — full-screen day backgrounds — */
+  lakeAnnecy    : "images/lake-annecy.jpg",                               // DAY 1 bg — turquoise Lake Annecy & peaks
+  annecyThiou   : "images/annecy-thiou-houses.jpg",                       // DAY 2 bg — coloured houses on the Thiou
+  chamonix      : "images/chamonix-mont-blanc.jpg",                       // DAY 3 bg — Chamonix valley beneath Mont Blanc
+  briancon      : "images/briancon-vauban.jpg",                           // DAY 4 bg — Vauban ramparts of Briançon
+  /* — Day 1 gallery: Annecy — */
+  pontAmours    : "images/annecy-pont-des-amours.jpg",                    // the Pont des Amours / lakefront
+  annecyCanal   : "images/annecy-canals.jpg",                             // flower-lined canals in the old town
+  palaisIle     : "images/annecy-palais-ile.jpg",                         // the Palais de l'Île in the canal
+  annecyGelato  : "images/annecy-gelato.jpg",                             // gelato & people-watching in the old town
+  albigny       : "images/annecy-plage-albigny.jpg",                      // evening swim off the Plage d'Albigny
+  /* — Day 2 gallery: lake to Chamonix — */
+  lakeBoat      : "images/annecy-lake-boat.jpg",                          // a boat trip / swim on Lake Annecy
+  annecyBikes   : "images/annecy-bike-path.jpg",                          // the lakeside cycle path
+  annecyMarket  : "images/annecy-market.jpg",                             // the morning market in the old town
+  chamonixArr   : "images/chamonix-valley-road.jpg",                      // the drive up into the mountains
+  chamonixTown  : "images/chamonix-town.jpg",                             // Chamonix town with Mont Blanc above
+  /* — Day 3 gallery: high mountains — */
+  aiguille      : "images/aiguille-du-midi.jpg",                          // Aiguille du Midi summit / Mont Blanc panorama
+  merDeGlace    : "images/mer-de-glace.jpg",                              // the Mer de Glace glacier (Montenvers)
+  aiguilleVoid  : "images/step-into-the-void.jpg",                        // the glass 'Step into the Void' box
+  montenvers    : "images/montenvers-railway.jpg",                        // the little red Montenvers rack railway
+  passDrive     : "images/alpine-pass-drive.jpg",                         // the scenic drive south over the high cols
+  /* — Day 4 gallery: Briançon & home — */
+  brianconTown  : "images/briancon-old-town.jpg",                         // streets of the Cité Vauban
+  col           : "images/alpine-col.jpg",                                // a high alpine col / mountain-pass viewpoint
+  brianconForts : "images/briancon-forts.jpg",                            // the Vauban forts on the heights above town
+  collegiale    : "images/briancon-collegiale.jpg",                       // the Collégiale & ramparts of Briançon
+  nightTrain    : "images/night-train.jpg"                                // the overnight train from Briançon toward Paris
 };
 
 const DATA = {
   coast:{
     heroTitle:"Gillian &amp; Marianne's Trip to Brittany &amp; Normandy",
-    dates:"12 – 15 August 2025 · 4 Days, 3 Nights",
+    dates:"12 – 16 August 2026 · arrive the 12th, fly home the 16th",
     accent:"#11343d",
     overviewH:"Brittany &amp; Normandy",
     overview:[
       "Brittany and Normandy — a coast of walled cities, tidal islands and big Atlantic skies, where granite ramparts, medieval lanes and oyster ports trade the heat of the south for cool sea air and a thousand years of history.",
       "Beginning and ending at Paris CDG, this four-day route runs west to the corsair city of Saint-Malo, threads through medieval Dinan and the oyster stalls of Cancale, and reaches the spellbinding abbey of Mont-Saint-Michel before turning back through Normandy."
     ],
-    feature:FILES.coastOverview,
-    gallery:[{src:FILES.saintMalo,cap:"Saint-Malo"},{src:FILES.dinan,cap:"Dinan"},{src:FILES.msm,cap:"Mont-Saint-Michel"},{src:FILES.bayeux,cap:"Bayeux"}],
     stops:[
       [49.00,2.55,"PARIS CDG",10,-7,"start"],
       [48.65,-2.02,"SAINT-MALO",-9,-3,"end"],
@@ -282,10 +313,10 @@ const DATA = {
       [49.28,-0.70,"BAYEUX",9,-4,"start"]
     ],
     days:[
-      {dno:"Day 1 of 4",title:"Arrival &amp; Saint-Malo",date:"12 August 2025",bg:FILES.saintMalo,
-       intro:{ttl:"On Arrival",txt:"From Paris CDG it's a straight run west to the walled corsair city of Saint-Malo on the Brittany coast — about a four-hour drive in your hire car, or the TGV via Rennes."},
+      {dno:"Day 1 of 4",title:"Arrival &amp; Saint-Malo",date:"12 August 2026",bg:FILES.saintMalo,
+       intro:{ttl:"On Arrival",txt:"From Paris CDG it's a straight run west to the walled corsair city of Saint-Malo on the Brittany coast — about a four-hour drive in your rental car, or the TGV via Rennes."},
        sched:[
-        ["10:00","Land at Paris CDG, pick up the hire car and point it west (or catch the TGV)."],
+        ["10:00","Land at Paris CDG, pick up the rental car and point it west (or catch the TGV)."],
         ["13:00","Lunch en route — a first taste of Breton galettes and cider."],
         ["15:30","Arrive Saint-Malo and settle inside the walls (intra-muros)."],
         ["17:00","Walk the ramparts as the tide rolls in, with views across to Dinard."],
@@ -294,7 +325,7 @@ const DATA = {
        options:["Walk the full circuit of the ramparts","Plage du Sillon for a first swim","Grand Aquarium Saint-Malo","Crêpes &amp; cider in a backstreet crêperie"],
        note:{cls:"alt",ttl:"Easing in",txt:"Saint-Malo's beaches, aquarium and the easy ferry hop to Dinard make for a gentle first day after the flight."}
       },
-      {dno:"Day 2 of 4",title:"Saint-Malo &amp; Dinan",date:"13 August 2025",bg:FILES.dinan,
+      {dno:"Day 2 of 4",title:"Saint-Malo &amp; Dinan",date:"13 August 2026",bg:FILES.dinan,
        intro:{ttl:"The Day",txt:"A day split between the sea and the Middle Ages — mornings on the Emerald Coast, afternoons in the beautifully preserved medieval town of Dinan."},
        sched:[
         ["08:00","Breakfast, then up onto the ramparts before the crowds."],
@@ -306,7 +337,7 @@ const DATA = {
        options:["Oyster tasting at the Cancale market","Kayak or boat trip on the Rance estuary","Château de Dinan &amp; the ramparts walk","Browse the artisan workshops on Rue du Jerzual"],
        note:{cls:"",ttl:"Good to book",txt:"The Cancale oyster market and the popular crêperies fill up in season — worth reserving ahead."}
       },
-      {dno:"Day 3 of 4",title:"Mont-Saint-Michel",date:"14 August 2025",bg:FILES.msm,
+      {dno:"Day 3 of 4",title:"Mont-Saint-Michel",date:"14 August 2026",bg:FILES.msm,
        intro:{ttl:"The Day",txt:"One of France's most spectacular sights — a medieval abbey crowning a tidal island that seems to float between sea and sky."},
        sched:[
         ["07:30","Early breakfast to beat the day-trippers."],
@@ -319,31 +350,30 @@ const DATA = {
        options:["Guided barefoot crossing of the bay at low tide","Abbey evening tour in summer","Time your visit to the high tide for the full island effect","Carry on to Bayeux for the Tapestry next morning"],
        note:{cls:"",ttl:"Good to book",txt:"Abbey tickets and guided bay crossings should be booked in advance, and tide times checked before you go."}
       },
-      {dno:"Day 4 of 4",title:"Bayeux &amp; Return to CDG",date:"15 August 2025",bg:FILES.bayeux,
-       intro:{ttl:"Heading Home",txt:"A short Normandy morning before the drive back to Paris — be at CDG by the evening."},
+      {dno:"Day 4 of 4",title:"Bayeux &amp; Return to CDG",date:"15 August 2026",bg:FILES.bayeux,
+       intro:{ttl:"Heading Home",txt:"With the flight home not until the morning of the 16th, there's no rush — enjoy a full Normandy day, then make the easy drive back to Paris in the evening and reach CDG late that night."},
        sched:[
-        ["08:00","Breakfast in Bayeux."],
-        ["09:00","The Bayeux Tapestry and the great Gothic cathedral."],
-        ["11:00","Set off for Paris CDG (about 3 hours)."],
-        ["—","Arrive CDG in good time for evening flights."]
+        ["09:00","A relaxed breakfast in Bayeux."],
+        ["10:00","The Bayeux Tapestry and the great Gothic cathedral."],
+        ["12:30","Lunch in the old town, then the D-Day beaches in the afternoon."],
+        ["18:00","Set off for Paris CDG (about 3 hours)."],
+        ["~21:00","Arrive and overnight near the airport for the morning flight."]
        ],
-       options:["A quick stop at the D-Day landing beaches if time allows","Bayeux's old town and waterwheels","Coffee and pastries before the road","Pick up Normandy cider or calvados to take home"],
-       note:{cls:"alt",ttl:"Travel day",txt:"Keep the morning light and pad the drive so the airport never feels rushed."}
+       options:["The D-Day landing beaches, with the extra afternoon","Bayeux's old town and waterwheels","A long, unhurried lunch before the road","Pick up Normandy cider or calvados to take home"],
+       note:{cls:"alt",ttl:"No late dash",txt:"Because you fly on the 16th, you can drive back at an easy pace and sleep near CDG — the airport never feels rushed."}
       }
     ]
   },
 
   alps:{
     heroTitle:"Gillian &amp; Marianne's Trip to the French Alps",
-    dates:"12 – 15 August 2025 · 4 Days, 3 Nights",
+    dates:"12 – 16 August 2026 · arrive the 12th, fly home the 16th",
     accent:"#13322a",
     overviewH:"Annecy &amp; the French Alps",
     overview:[
       "The French Alps — turquoise lakes, flower-lined canals and the snows of Mont Blanc, where laid-back lakeside days give way to high-mountain drama and one of Europe's loveliest old towns.",
       "Beginning and ending at Paris CDG, this four-day route runs south to Annecy and its lake, climbs to Chamonix beneath Mont Blanc, and crosses the high passes to the fortified Cité Vauban of Briançon — the highest town in France — before the long road home."
     ],
-    feature:FILES.alpsOverview,
-    gallery:[{src:FILES.lakeAnnecy,cap:"Lake Annecy"},{src:FILES.annecyCanal,cap:"Annecy canals"},{src:FILES.annecyThiou,cap:"Houses on the Thiou"},{src:FILES.chamonix,cap:"Chamonix"},{src:FILES.briancon,cap:"Briançon"}],
     stops:[
       [49.00,2.55,"PARIS CDG",10,-7,"start"],
       [45.90,6.13,"ANNECY",-9,0,"end"],
@@ -351,10 +381,10 @@ const DATA = {
       [44.90,6.65,"BRIANÇON",9,12,"start"]
     ],
     days:[
-      {dno:"Day 1 of 4",title:"Arrival &amp; Annecy",date:"12 August 2025",bg:FILES.lakeAnnecy,
+      {dno:"Day 1 of 4",title:"Arrival &amp; Annecy",date:"12 August 2026",bg:FILES.lakeAnnecy,
        intro:{ttl:"On Arrival",txt:"From CDG you'll head south to Annecy, the ‘Venice of the Alps’, where a turquoise lake meets a maze of flower-lined canals — roughly five to six hours by road, or faster by TGV."},
        sched:[
-        ["10:00","Land at Paris CDG, pick up the hire car and head south (or catch the TGV)."],
+        ["10:00","Land at Paris CDG, pick up the rental car and head south (or catch the TGV)."],
         ["13:00","Lunch en route through the French countryside."],
         ["16:30","Arrive Annecy and settle in near the old town."],
         ["18:00","First stroll along the lakefront and over the Pont des Amours."],
@@ -363,7 +393,7 @@ const DATA = {
        options:["Lakefront walk in the Jardins de l'Europe","Cross the Pont des Amours at golden hour","Gelato and people-watching in the old town","An evening swim off the Plage d'Albigny"],
        note:{cls:"alt",ttl:"Easing in",txt:"A relaxed arrival day — the lakeside lawns and gentle old town are ideal for stretching out after the flight."}
       },
-      {dno:"Day 2 of 4",title:"Annecy to Chamonix",date:"13 August 2025",bg:FILES.annecyThiou,
+      {dno:"Day 2 of 4",title:"Annecy to Chamonix",date:"13 August 2026",bg:FILES.annecyThiou,
        intro:{ttl:"The Day",txt:"A morning among Annecy's canals and waterside houses, then up into the high mountains to Chamonix beneath Mont Blanc."},
        sched:[
         ["08:00","Breakfast, then explore the old town's canals and the Palais de l'Île."],
@@ -375,7 +405,7 @@ const DATA = {
        options:["Lake Annecy boat cruise","Rent bikes along the lakeside path","Visit the Château d'Annecy above the rooftops","Browse the morning market in the old town"],
        note:{cls:"",ttl:"Good to book",txt:"Lake boat trips and bike hire are busiest at midday in summer — go early."}
       },
-      {dno:"Day 3 of 4",title:"Chamonix to Briançon",date:"14 August 2025",bg:FILES.chamonix,
+      {dno:"Day 3 of 4",title:"Chamonix to Briançon",date:"14 August 2026",bg:FILES.chamonix,
        intro:{ttl:"The Big Mountain Day",txt:"Mont Blanc in the morning, then a scenic drive south over the high passes to the fortified town of Briançon."},
        sched:[
         ["07:30","Early breakfast in Chamonix."],
@@ -388,16 +418,17 @@ const DATA = {
        options:["Aiguille du Midi &amp; the ‘Step into the Void’","Montenvers railway to the Mer de Glace","A via ferrata for the adventurous","Walk the Vauban ramparts at sunset"],
        note:{cls:"",ttl:"Good to book",txt:"Aiguille du Midi tickets sell out — book a morning slot in advance, and check the mountain weather."}
       },
-      {dno:"Day 4 of 4",title:"Briançon &amp; Return to CDG",date:"15 August 2025",bg:FILES.briancon,
-       intro:{ttl:"Heading Home",txt:"A last alpine morning before the long drive north — this is the big travel day, so an early start matters."},
+      {dno:"Day 4 of 4",title:"Briançon &amp; the Journey Home",date:"15 August 2026",bg:FILES.briancon,
+       intro:{ttl:"Heading Home",txt:"With the flight home on the morning of the 16th, the long way north is far gentler — enjoy a last alpine morning, then either drive or take the evening Briançon–Paris night train, arriving rested in the early hours."},
        sched:[
-        ["07:00","Early breakfast in the Cité Vauban."],
-        ["08:00","A quick wander of the ramparts and Collégiale for the views."],
-        ["08:30","Set off for Paris CDG (about 6½ hours)."],
-        ["—","Arrive CDG in time for late flights."]
+        ["09:00","A slow breakfast in the Cité Vauban."],
+        ["10:30","Last wander of the ramparts and the forts above town."],
+        ["13:00","Lunch, then a relaxed afternoon in the mountains."],
+        ["17:00","Either set off on the drive north, or board the evening train toward Paris."],
+        ["overnight","The Briançon–Paris night train rolls in around dawn — step off near CDG for the morning flight."]
        ],
-       options:["Sunrise over the forts above town","Grab provisions for the road","A short stop at a col viewpoint en route","Stretch breaks through the Rhône-Alpes countryside"],
-       note:{cls:"alt",ttl:"Travel day",txt:"It's a long haul back — leave Briançon early, share the driving, and build in breaks so you reach the airport with time to spare."}
+       options:["Take the Briançon–Paris night train instead of the long drive","Sunrise over the forts above the old town","A col viewpoint or lake stop if you drive","Provisions and a picnic for the journey"],
+       note:{cls:"alt",ttl:"Let the train do the work",txt:"The overnight train turns the long haul into a night's sleep — or split the drive with a stop. Either way you only need to be at CDG for the morning of the 16th."}
       }
     ]
   }
@@ -408,16 +439,16 @@ const DATA = {
    drop matching files into an /images folder in the repo to fill them in. */
 const DAY_GALLERIES = {
   coast:[
-    [ {src:FILES.saintMalo,cap:"Saint-Malo ramparts"}, {src:FILES.galette,cap:"Galettes & cider"}, {src:FILES.saintMaloBeach,cap:"Plage du Sillon"} ],
-    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.dinan,cap:"Rue du Jerzual, Dinan"}, {src:FILES.dinanPort,cap:"The port on the Rance"} ],
-    [ {src:FILES.msm,cap:"Mont-Saint-Michel"}, {src:FILES.poulard,cap:"La Mère Poulard omelette"}, {src:FILES.bayCrossing,cap:"Barefoot bay crossing"} ],
-    [ {src:FILES.bayeux,cap:"Bayeux cathedral"}, {src:FILES.tapestry,cap:"The Bayeux Tapestry"}, {src:FILES.dday,cap:"D-Day beaches"} ]
+    [ {src:FILES.galette,cap:"Crêpes & cider"}, {src:FILES.saintMaloBeach,cap:"Plage du Sillon"}, {src:FILES.saintMaloFort,cap:"Fort National at low tide"}, {src:FILES.saintMaloOld,cap:"Inside the walls"}, {src:FILES.dinard,cap:"Across to Dinard"} ],
+    [ {src:FILES.oysters,cap:"Cancale oysters"}, {src:FILES.cancalePort,cap:"Cancale harbour"}, {src:FILES.ranceKayak,cap:"Kayaking the Rance"}, {src:FILES.dinanPort,cap:"The port on the Rance"}, {src:FILES.dinanOld,cap:"Dinan's old town"} ],
+    [ {src:FILES.poulard,cap:"La Mère Poulard omelette"}, {src:FILES.bayCrossing,cap:"Barefoot bay crossing"}, {src:FILES.msmCloister,cap:"The abbey cloisters"}, {src:FILES.msmVillage,cap:"Village lanes & ramparts"}, {src:FILES.msmNight,cap:"The Mount after dark"} ],
+    [ {src:FILES.tapestry,cap:"The Bayeux Tapestry"}, {src:FILES.dday,cap:"D-Day beaches"}, {src:FILES.bayeuxOld,cap:"Waterwheels & old town"}, {src:FILES.calvados,cap:"Cider & calvados"}, {src:FILES.normandyRoad,cap:"The road back"} ]
   ],
   alps:[
-    [ {src:FILES.lakeAnnecy,cap:"Lake Annecy"}, {src:FILES.pontAmours,cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"} ],
-    [ {src:FILES.annecyThiou,cap:"Houses on the Thiou"}, {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.chamonix,cap:"Into Chamonix"} ],
-    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.briancon,cap:"Cité Vauban, Briançon"} ],
-    [ {src:FILES.briancon,cap:"Vauban ramparts"}, {src:FILES.brianconTown,cap:"Cité Vauban streets"}, {src:FILES.col,cap:"Alpine cols"} ]
+    [ {src:FILES.pontAmours,cap:"Pont des Amours"}, {src:FILES.annecyCanal,cap:"Old-town canals"}, {src:FILES.palaisIle,cap:"Palais de l'Île"}, {src:FILES.annecyGelato,cap:"Gelato in the old town"}, {src:FILES.albigny,cap:"Evening by the lake"} ],
+    [ {src:FILES.lakeBoat,cap:"Out on the lake"}, {src:FILES.annecyBikes,cap:"Lakeside bike path"}, {src:FILES.annecyMarket,cap:"The morning market"}, {src:FILES.chamonixArr,cap:"Into the mountains"}, {src:FILES.chamonixTown,cap:"Chamonix & Mont Blanc"} ],
+    [ {src:FILES.aiguille,cap:"Aiguille du Midi"}, {src:FILES.merDeGlace,cap:"Mer de Glace"}, {src:FILES.aiguilleVoid,cap:"Step into the Void"}, {src:FILES.montenvers,cap:"Montenvers railway"}, {src:FILES.passDrive,cap:"Over the high passes"} ],
+    [ {src:FILES.brianconTown,cap:"Cité Vauban streets"}, {src:FILES.col,cap:"Alpine cols"}, {src:FILES.brianconForts,cap:"The forts above town"}, {src:FILES.collegiale,cap:"Collégiale & ramparts"}, {src:FILES.nightTrain,cap:"Night train home"} ]
   ]
 };
 DATA.coast.days.forEach((d,i)=>d.gallery=DAY_GALLERIES.coast[i]);
@@ -515,10 +546,6 @@ function viewHTML(key){
         <div class="route-label">The Route</div>
         <div class="routemap" id="rmap-${key}"></div>
       </div>
-      <div style="max-width:720px;margin:0 auto;padding:0 24px">
-        <img class="feature" loading="lazy" alt="${v.overviewH}" src="${img(v.feature,1700)}">
-      </div>
-      ${galleryHTML(key, v.gallery)}
     </div>
   </section>
 
@@ -527,7 +554,7 @@ function viewHTML(key){
   <div class="closing">
     <div class="inner">
       <h2 class="serif">Same start &amp; finish: Paris CDG</h2>
-      <p>Both trips begin and end at Paris Charles de Gaulle — land the morning of 12 August and be back at the airport by the night of 15 August.</p>
+      <p>Both trips begin and end at Paris Charles de Gaulle — land the morning of 12 August and fly home on the morning of the 16th.</p>
       <div class="air">Paris–Charles de Gaulle (IATA: CDG, ICAO: LFPG)</div>
     </div>
   </div>`;
